@@ -6,6 +6,7 @@ import TopPerformerOne from "./child/TopPerformerOne";
 import TotalSubscriberOne from "./child/TotalSubscriberOne";
 import UnitCountOne from "./child/UnitCountOne";
 import UsersOverviewOne from "./child/UsersOverviewOne";
+import UsersListLayer from "@/components/UsersListLayer";
 
 const DashBoardLayerOne = () => {
   return (
@@ -24,7 +25,7 @@ const DashBoardLayerOne = () => {
         <UsersOverviewOne />
 
         {/* LatestRegisteredOne */}
-        <LatestRegisteredOne />
+        <UsersListLayer />
 
         {/* TopPerformerOne */}
         {/*<TopPerformerOne />*/}

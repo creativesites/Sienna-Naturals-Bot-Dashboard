@@ -3294,6 +3294,18 @@ th {
   background: linear-gradient(299deg, #ecfff7 1.76%, #adf7d6 98.11%);
 }
 
+.bg-sienna-primary-green {
+  background-color: #c7d6cc !important;
+}
+
+.product-faq {
+  background: url(https://www.siennanaturals.com/cdn/shop/t/140/assets/background-icon-top.png);
+  background-size: cover;
+  padding: 78px 22px 89px;
+  background-repeat: no-repeat;
+  height: 100%;
+}
+
 .bg-gradient-danger {
   background: linear-gradient(299deg, #ffefef 0.96%, #ffd7d7 98.97%);
 }

@@ -6,22 +6,23 @@ export async function GET(request) {
     try {
         // Get the last 30 days of data.  Adjust the interval as needed.
         const query = `
-      SELECT
-        DATE(created_at) as date,
-        COUNT(*) as message_count
-      FROM conversations
-      WHERE created_at >= NOW() - INTERVAL '30 days'
-      GROUP BY DATE(created_at)
-      ORDER BY DATE(created_at) ASC;
-    `;
+            SELECT
+                DATE(c.created_at) as date,
+                SUM(jsonb_array_length(c.chat_history)) as message_count
+            FROM conversations c
+            WHERE c.created_at >= NOW() - INTERVAL '30 days'
+            GROUP BY DATE(c.created_at)
+            ORDER BY DATE(c.created_at) ASC;
+        `;
 
         const result = await pgClient.query(query);
 
         // Format the data for ApexCharts.  ApexCharts expects an array of {x: date, y: count} objects.
         const data = result.rows.map(row => ({
-            x: row.date, // row.date is already a Date object thanks to PostgreSQL
+            x: row.date, // row.date is already a Date object
             y: parseInt(row.message_count, 10), // Ensure count is an integer
         }));
+
         // Get today's date
         const today = new Date();
         // Calculate the start date (30 days ago)
@@ -45,6 +46,7 @@ export async function GET(request) {
                 y: messageCountsMap.get(dateString) || 0,
             });
         }
+
         return NextResponse.json(completeData);
 
     } catch (error) {

@@ -52,7 +52,7 @@ const CardWithBackgroundColor = () => {
           </div>
         </div>
         <div className='col-xxl-3 col-sm-6'>
-          <div className='card h-100 radius-12 bg-gradient-success text-end'>
+          <div className='card h-100 radius-12 bg-sienna-primary-green text-end'>
             <div className='card-body p-24'>
               <div className='w-64-px h-64-px d-inline-flex align-items-center justify-content-center bg-success-600 text-white mb-16 radius-12'>
                 <Icon icon='fluent:toolbox-20-filled' className='h5 mb-0' />

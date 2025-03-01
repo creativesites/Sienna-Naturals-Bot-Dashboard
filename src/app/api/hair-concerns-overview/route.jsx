@@ -5,7 +5,7 @@ import { pgClient } from '@/helper/database';
 export async function GET(request) {
     try {
         // Get the timeframe from query parameters
-        const { searchParams } = new URL(request.url)
+        const { searchParams } = new URL(request.url);
         const timeframe = searchParams.get('timeframe') || 'Today'; // Default to 'Today'
 
         let startDate;
@@ -28,16 +28,16 @@ export async function GET(request) {
 
         const query = `
       SELECT
-        UNNEST(hair_concerns) as concern,
+        issue_description as concern,
         COUNT(*) as count
-      FROM user_hair_profiles
-      WHERE hair_concerns IS NOT NULL
-      AND updated_at >= ${startDate}
-      GROUP BY concern
+      FROM hair_issues
+      WHERE reported_at >= ${startDate}
+      GROUP BY issue_description
       ORDER BY count DESC;
     `;
 
         const result = await pgClient.query(query);
+
         // If no data, return default values
         if (result.rows.length === 0) {
             return NextResponse.json([
@@ -48,6 +48,7 @@ export async function GET(request) {
                 { concern: 'Other', count: 0 }
             ]);
         }
+
         return NextResponse.json(result.rows);
 
     } catch (error) {

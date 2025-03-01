@@ -26,6 +26,7 @@ const UsersOverviewOne = () => {
           throw new Error(`HTTP error! status: ${response.status}`);
         }
         const data = await response.json();
+        console.log('hair concerns', data)
         // Transform data for the donut chart
         const chartData = data.map(item => ({
           label: item.concern,
