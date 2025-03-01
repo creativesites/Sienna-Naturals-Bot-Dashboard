@@ -879,18 +879,18 @@ const MasterLayout = ({ children }) => {
             {/*    <span>Testimonials</span>*/}
             {/*  </Link>*/}
             {/*</li>*/}
-            {/*<li>*/}
-            {/*  <Link*/}
-            {/*    href='/faq'*/}
-            {/*    className={pathname === "/faq" ? "active-page" : ""}*/}
-            {/*  >*/}
-            {/*    <Icon*/}
-            {/*      icon='mage:message-question-mark-round'*/}
-            {/*      className='menu-icon'*/}
-            {/*    />*/}
-            {/*    <span>FAQs.</span>*/}
-            {/*  </Link>*/}
-            {/*</li>*/}
+            <li>
+              <Link
+                href='/documentation'
+                className={pathname === "/documentation" ? "active-page" : ""}
+              >
+                <Icon
+                  icon='mage:message-question-mark-round'
+                  className='menu-icon'
+                />
+                <span>Documentation.</span>
+              </Link>
+            </li>
             {/*<li>*/}
             {/*  <Link*/}
             {/*    href='/error'*/}
@@ -900,15 +900,15 @@ const MasterLayout = ({ children }) => {
             {/*    <span>404</span>*/}
             {/*  </Link>*/}
             {/*</li>*/}
-            {/*<li>*/}
-            {/*  <Link*/}
-            {/*    href='/terms-condition'*/}
-            {/*    className={pathname === "/terms-condition" ? "active-page" : ""}*/}
-            {/*  >*/}
-            {/*    <Icon icon='octicon:info-24' className='menu-icon' />*/}
-            {/*    <span>Terms &amp; Conditions</span>*/}
-            {/*  </Link>*/}
-            {/*</li>*/}
+            <li>
+              <Link
+                href='/terms-condition'
+                className={pathname === "/terms-condition" ? "active-page" : ""}
+              >
+                <Icon icon='octicon:info-24' className='menu-icon' />
+                <span>Additional Chatbot Instructions</span>
+              </Link>
+            </li>
             {/*<li>*/}
             {/*  <Link*/}
             {/*    href='/coming-soon'*/}
