@@ -1,5 +1,5 @@
 // components/child/UnitCountOne.js
-'use client'
+"use client";
 import React, { useState, useEffect } from 'react';
 import { Icon } from '@iconify/react';
 
@@ -9,7 +9,8 @@ const UnitCountOne = () => {
         activeUsers: 0,
         productInteractions: 0,
         hairProfiles: 0,
-        commonConcerns: [],
+        totalHairIssues: 0, // Use this for the total count
+        commonConcerns: [], // Keep this if you want to use it later, but it's not used in this component now
         topProducts: [],
     });
     const [loading, setLoading] = useState(true);
@@ -18,8 +19,7 @@ const UnitCountOne = () => {
     useEffect(() => {
         const fetchStats = async () => {
             try {
-                const response = await fetch('/api/statistics'); // Corrected endpoint
-                console.log('stats api response')
+                const response = await fetch('/api/statistics');
                 if (!response.ok) {
                     throw new Error(`HTTP error! status: ${response.status}`);
                 }
@@ -55,11 +55,10 @@ const UnitCountOne = () => {
                                 <p className="fw-medium text-primary-light mb-1">Total Conversations</p>
                                 <h6 className="mb-0">{stats.totalConversations}</h6>
                             </div>
-                            <div className="w-50-px h-50-px bg-cyan rounded-circle d-flex justify-content-center align-items-center">
+                            <div className="w-50-px h-50-px bg-sienna-light-green rounded-circle d-flex justify-content-center align-items-center">
                                 <Icon icon="solar:chat-round-bold" className="text-white text-2xl mb-0" />
                             </div>
                         </div>
-                        {/*  No additional info for total conversations  */}
                     </div>
                 </div>
             </div>
@@ -73,11 +72,10 @@ const UnitCountOne = () => {
                                 <p className="fw-medium text-primary-light mb-1">Active Users (30 Days)</p>
                                 <h6 className="mb-0">{stats.activeUsers}</h6>
                             </div>
-                            <div className="w-50-px h-50-px bg-purple rounded-circle d-flex justify-content-center align-items-center">
+                            <div className="w-50-px h-50-px bg-sienna-light-green rounded-circle d-flex justify-content-center align-items-center">
                                 <Icon icon="gridicons:multiple-users" className="text-white text-2xl mb-0" />
                             </div>
                         </div>
-                        {/* No additional info for active users (it's already for the last 30 days) */}
                     </div>
                 </div>
             </div>
@@ -91,11 +89,10 @@ const UnitCountOne = () => {
                                 <p className="fw-medium text-primary-light mb-1">Product Interactions</p>
                                 <h6 className="mb-0">{stats.productInteractions}</h6>
                             </div>
-                            <div className="w-50-px h-50-px bg-info rounded-circle d-flex justify-content-center align-items-center">
-                                <Icon icon="mdi:hand-pointing-right" className="text-white text-2xl mb-0" /> {/* Icon for interaction */}
+                            <div className="w-50-px h-50-px bg-sienna-light-green rounded-circle d-flex justify-content-center align-items-center">
+                                <Icon icon="mdi:hand-pointing-right" className="text-white text-2xl mb-0" />
                             </div>
                         </div>
-                        {/* No additional info needed */}
                     </div>
                 </div>
             </div>
@@ -109,36 +106,30 @@ const UnitCountOne = () => {
                                 <p className="fw-medium text-primary-light mb-1">Hair Profiles Analyzed</p>
                                 <h6 className="mb-0">{stats.hairProfiles}</h6>
                             </div>
-                            <div className="w-50-px h-50-px bg-success-main rounded-circle d-flex justify-content-center align-items-center">
-                                <Icon icon="ph:hair" className="text-white text-2xl mb-0" /> {/* Icon for hair */}
+                            <div className="w-50-px h-50-px bg-sienna-light-green rounded-circle d-flex justify-content-center align-items-center">
+                                <Icon icon="mingcute:hair-line" className="text-white text-2xl mb-0" />
                             </div>
                         </div>
-                        {/* No additional info needed */}
                     </div>
                 </div>
             </div>
 
-            {/* Placeholder for Top Concerns/Products (Could be a separate component) */}
+            {/* Total Hair Issues */}
             <div className="col">
                 <div className="card shadow-none border bg-gradient-start-5 h-100">
                     <div className="card-body p-20">
                         <div className="d-flex flex-wrap align-items-center justify-content-between gap-3">
                             <div>
-                                <p className="fw-medium text-primary-light mb-1">Top 5 Hair Concerns</p>
-                                {/* Display Top Concerns - could be a simple list */}
-                                <ul className="mb-0">
-                                    {stats.commonConcerns.map((concern, index) => (
-                                        <li key={index}>{concern.concern} ({concern.count})</li>
-                                    ))}
-                                </ul>
+                                <p className="fw-medium text-primary-light mb-1">Total Hair Issues</p>
+                                <h6 className="mb-0">{stats.totalHairIssues}</h6> {/* Display totalHairIssues */}
                             </div>
-                            {/*No icon, it's a list */}
+                            <div className="w-50-px h-50-px bg-sienna-light-green rounded-circle d-flex justify-content-center align-items-center">
+                                <Icon icon="mingcute:hair-2-line" className="text-white text-2xl mb-0" />
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
-
-            {/*i can put here another row if needed, following the template patterns*/}
         </div>
     );
 };
