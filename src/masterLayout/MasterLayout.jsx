@@ -895,7 +895,7 @@ const MasterLayout = ({ children }) => {
             <li className='sidebar-menu-group-title'>Manage Chatbot</li>
             <li>
               <Link
-                href='/terms-condition'
+                href='/instructions'
                 className={pathname === "/instructions" ? "active-page" : ""}
               >
                 <Icon icon='octicon:info-24' className='menu-icon' />

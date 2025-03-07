@@ -143,16 +143,16 @@ const TestimonialsPage = () => {
                                     <td>{testimonial.testimonial}</td>
                                     <td>
                                         <button
-                                            className="btn btn-sm btn-primary me-2"
+                                            className='bg-info-focus bg-hover-info-200 text-info-600 fw-medium w-40-px h-40-px d-flex justify-content-center align-items-center rounded-circle'
                                             onClick={() => handleEdit(testimonial)}
                                         >
-                                            <Icon icon="mdi:pencil" />
+                                            <Icon icon="mdi:pencil" className='icon text-xl'/>
                                         </button>
                                         <button
-                                            className="btn btn-sm btn-danger"
+                                            className='bg-danger-focus bg-hover-danger-200 text-danger-600 fw-medium w-40-px h-40-px d-flex justify-content-center align-items-center rounded-circle'
                                             onClick={() => handleDelete(testimonial.testimonial_id)}
                                         >
-                                            <Icon icon="mdi:trash" />
+                                            <Icon icon="mdi:trash" className='icon text-xl'/>
                                         </button>
                                     </td>
                                 </tr>
