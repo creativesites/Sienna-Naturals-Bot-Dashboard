@@ -870,15 +870,7 @@ const MasterLayout = ({ children }) => {
             {/*  </ul>*/}
             {/*</li>*/}
 
-            {/*<li>*/}
-            {/*  <Link*/}
-            {/*    href='/testimonials'*/}
-            {/*    className={pathname === "/testimonials" ? "active-page" : ""}*/}
-            {/*  >*/}
-            {/*    <Icon icon='ri-star-line' className='menu-icon' />*/}
-            {/*    <span>Testimonials</span>*/}
-            {/*  </Link>*/}
-            {/*</li>*/}
+          
             <li>
               <Link
                 href='/documentation'
@@ -900,15 +892,31 @@ const MasterLayout = ({ children }) => {
             {/*    <span>404</span>*/}
             {/*  </Link>*/}
             {/*</li>*/}
+            <li className='sidebar-menu-group-title'>Manage Chatbot</li>
             <li>
               <Link
                 href='/terms-condition'
-                className={pathname === "/terms-condition" ? "active-page" : ""}
+                className={pathname === "/instructions" ? "active-page" : ""}
               >
                 <Icon icon='octicon:info-24' className='menu-icon' />
                 <span>Additional Chatbot Instructions</span>
               </Link>
             </li>
+            <li>
+               <Link href='/products'>
+               <Icon icon='mingcute:storage-line' className='menu-icon' />
+               <span>Manage Products</span>
+             </Link>
+            </li>
+              <li>
+                <Link
+                  href='/testimonials'
+                  className={pathname === "/testimonials" ? "active-page" : ""}
+                >
+                  <Icon icon='ri-star-line' className='menu-icon' />
+                  <span>Manage Testimonials</span>
+                </Link>
+              </li>
             {/*<li>*/}
             {/*  <Link*/}
             {/*    href='/coming-soon'*/}
@@ -1630,7 +1638,7 @@ const MasterLayout = ({ children }) => {
         </div>
 
         {/* dashboard-main-body */}
-        <div className='dashboard-main-body'>{children}</div>
+        <div className='dashboard-main-body bg-sienna-img'>{children}</div>
 
         {/* Footer section */}
         <footer className='d-footer'>

@@ -401,6 +401,11 @@ body > section > main > div.dashboard-main-body > section > div:nth-child(3) > d
   background-color: #d1e2d7;
 }
 
+.bg-sienna-img {
+  background-image: url("https://www.siennanaturals.com/cdn/shop/files/Group_2099-DESKTOP_6e663a8c-156d-4e5d-9258-27e3f2582c4f.png");
+  background-position: center;
+}
+
 body.overlay-active::after {
   width: 100%;
 }
@@ -8877,7 +8882,7 @@ h6,
 }
 
 .btn-primary-600 {
-  background-color: var(--primary-600);
+  background-color: #90ae9b;
   color: #fff;
   border-color: var(--primary-600);
 }
@@ -14384,7 +14389,7 @@ td.fc-header-center {
 
 .ql-editor {
   border-radius: 12px;
-  min-height: 600px;
+  min-height: 200px;
 }
 
 .ql-picker-label,

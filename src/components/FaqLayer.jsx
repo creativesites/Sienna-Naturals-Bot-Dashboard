@@ -3,17 +3,6 @@
 import { useState } from 'react';
 import { CodeBlock } from 'react-code-block';
 
-function CodeBlockDemo({ code, language }) {
-    return (
-        <CodeBlock code={code} language={language}>
-            <CodeBlock.Code className="bg-gray-900 p-6 rounded-xl shadow-lg">
-                <CodeBlock.LineContent>
-                    <CodeBlock.Token />
-                </CodeBlock.LineContent>
-            </CodeBlock.Code>
-        </CodeBlock>
-    );
-}
 
 const FaqLayer = () => {
   return (
