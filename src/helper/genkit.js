@@ -6,7 +6,7 @@ import { pgClient } from '@/helper/database';
 
 const ai = genkit({
   plugins: [googleAI({
-    apiKey: 'AIzaSyBB5ZYwktOFI3R3j_vs8U7CxwKgS3XNgM0',
+    apiKey: process.env.GENKIT_API_KEY,
   })],
   model: gemini25ProExp0325,
 });
