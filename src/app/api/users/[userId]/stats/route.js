@@ -4,7 +4,7 @@ import { pgClient } from '@/helper/database';
 
 export async function GET(request, { params }) {
     try {
-        const userId = params.userId;
+        const userId = await params.userId;
 
         // Total Conversations
         const totalConversationsQuery = await pgClient.query(

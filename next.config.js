@@ -1,13 +1,13 @@
+
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   reactStrictMode: false,
   images: {
-    remotePatterns: [ // Use remotePatterns for more control
+    remotePatterns: [
       {
         protocol: 'https',
         hostname: 'thekingdomeconomy.com',
-        pathname: '/wp-content/uploads/**', // Allow all paths under /wp-content/uploads/
-        //unoptimized: true, // Disable optimization for these images from this domain
+        pathname: '/wp-content/uploads/**',
       },
       {
         protocol: 'https',
@@ -36,6 +36,28 @@ const nextConfig = {
       }
     ],
   },
+  // Add these new settings for module resolution
+  webpack: (config, { buildId, dev, isServer, defaultLoaders, webpack }) => {
+    // Add a resolver plugin that explicitly handles @/ paths
+    config.resolve.plugins = config.resolve.plugins || [];
+    
+    // Add support for resolving TypeScript paths
+    if (!config.resolve.alias) {
+      config.resolve.alias = {};
+    }
+    
+    config.resolve.alias['@'] = require('path').resolve(__dirname, 'src');
+    
+    // Important: Return the modified config
+    return config;
+  },
+  // Enable experimental features that might help with module resolution
+  experimental: {
+    externalDir: true,  // Helps with monorepo setups if applicable
+    modularizeImports: {
+      // You can add specific package optimizations here if needed
+    }
+  }
 };
 
 module.exports = nextConfig;

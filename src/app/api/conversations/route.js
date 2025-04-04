@@ -7,10 +7,10 @@ export async function GET(request) {
         const { searchParams } = new URL(request.url);
         const search = searchParams.get('search') || '';
         let query = `
-      SELECT c.conversation_id, c.user_id, c.created_at, c.summary, c.chat_history, u.name as user_name
-      FROM conversations c
-      LEFT JOIN users u ON c.user_id = u.user_id  -- Join with the users table
-    `;
+            SELECT c.conversation_id, c.user_id, c.created_at, c.summary, c.chat_history, u.name as user_name
+            FROM conversations c
+                     LEFT JOIN users u ON c.user_id = u.user_id  -- Join with the users table
+        `;
 
         const queryParams = [];
 
@@ -21,6 +21,7 @@ export async function GET(request) {
 
         query += ` ORDER BY c.created_at DESC`; // Order by creation date
         const result = await pgClient.query(query, queryParams);
+        console.log('convoz: ,', JSON.stringify(result.rows))
         return NextResponse.json(result.rows);
     } catch (error) {
         console.error('Error fetching conversations:', error);

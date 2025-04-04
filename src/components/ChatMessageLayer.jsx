@@ -221,19 +221,6 @@ const ChatMessageLayer = () => {
                 <p>Select a conversation to view details.</p>
             )}
           </div>
-          <form className='chat-message-box'>
-            <input type='text' name='chatMessage' placeholder='Write message' disabled />
-            <div className='chat-message-box-action'>
-              <button
-                  type='submit'
-                  className='btn btn-sm btn-primary-600 radius-8 d-inline-flex align-items-center gap-1'
-                  disabled
-              >
-                Send
-                <Icon icon='f7:paperplane' />
-              </button>
-            </div>
-          </form>
         </div>
       </div>
   );

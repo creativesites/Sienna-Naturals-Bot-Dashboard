@@ -113,17 +113,17 @@ const MasterLayout = ({ children }) => {
         <div>
           <Link href='/' className='sidebar-logo'>
             <img
-              src='assets/images/sienna-logo.svg'
+              src='/assets/images/sienna-logo.svg'
               alt='site logo'
               className='light-logo'
             />
             <img
-              src='assets/images/sienna-logo.svg'
+              src='/assets/images/sienna-logo.svg'
               alt='site logo'
               className='dark-logo'
             />
             <img
-              src='assets/images/logo-icon.jpeg'
+              src='/assets/images/sienna-logo.svg'
               alt='site logo'
               className='logo-icon'
             />
@@ -908,6 +908,18 @@ const MasterLayout = ({ children }) => {
                <span>Manage Products</span>
              </Link>
             </li>
+            <li>
+              <Link
+                href='/training'
+                className={pathname === "/training" ? "active-page" : ""}
+              >
+                <Icon
+                  icon='solar:document-text-outline'
+                  className='menu-icon'
+                />
+                <span>Chatbot Training</span>
+              </Link>
+            </li>
               <li>
                 <Link
                   href='/testimonials'
@@ -1079,7 +1091,7 @@ const MasterLayout = ({ children }) => {
             <div className='col-auto'>
               <div className='d-flex flex-wrap align-items-center gap-3'>
                 {/* ThemeToggleButton */}
-                <ThemeToggleButton />
+
                 {/*<div className='dropdown d-none d-sm-inline-block'>*/}
                 {/*  <button*/}
                 {/*    className='has-indicator w-40-px h-40-px bg-neutral-200 rounded-circle d-flex justify-content-center align-items-center'*/}

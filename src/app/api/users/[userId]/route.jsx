@@ -7,12 +7,13 @@ export async function GET(request, { params }) {
         const userId = params.userId;
 
         const query = `
-      SELECT *
-      FROM users
-      WHERE user_id = $1;
-    `;
+            SELECT *
+            FROM users
+            WHERE user_id = $1;
+        `;
 
         const result = await pgClient.query(query, [userId]);
+        console.log('result:', result)
 
         if (result.rows.length === 0) {
             return NextResponse.json(null, { status: 404 }); // Return 404 if user not found

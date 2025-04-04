@@ -1,7 +1,6 @@
 // app/api/products/[productId]/route.js
 import { NextResponse } from 'next/server';
-import { pgClient } from '@/helper/database'; // Adjust path to your db config
-
+import { pgClient } from '@/helper/database'; 
 // GET - Get a single product by ID
 export async function GET(request, { params }) {
     const productId = params.productId;
