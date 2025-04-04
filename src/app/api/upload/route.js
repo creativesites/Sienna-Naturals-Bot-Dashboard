@@ -22,7 +22,7 @@ export async function POST(request) {
     // Convert file to buffer - COMPATIBLE APPROACH
     const fileBuffer = Buffer.from(await file.arrayBuffer());
     
-    const fileName = `${Date.now()}-${file.name.replace(/[^a-zA-Z0-9.-]/g, '-')}`;
+    const fileName = `${Date.now()}-${file.name}`;
     const contentType = file.type;
 
     // Upload to GCP
