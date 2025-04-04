@@ -2,7 +2,7 @@
 
 import { Storage } from "@google-cloud/storage";
 
-const storageConfig = process.env.GCLOUD_SERVICE_ACCOUNT_KEY;
+const storageConfig = JSON.parse(process.env.GCLOUD_SERVICE_ACCOUNT_KEY);
 
 const storage = new Storage({
   credentials: storageConfig
