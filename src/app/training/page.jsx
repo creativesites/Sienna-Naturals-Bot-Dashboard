@@ -1,13 +1,17 @@
-"use client"
 import Breadcrumb from "@/components/Breadcrumb";
-import KanbanLayer from "@/components/KanbanLayer";
+// import KanbanLayer from "@/components/KanbanLayer";
 import MasterLayout from "@/masterLayout/MasterLayout";
+import dynamic from 'next/dynamic';
+const KanbanLayer = dynamic(
+  () => import('@/components/KanbanLayer'),
+  { ssr: false }
+);
 
-// export const metadata = {
-//   title: "Training- Sienna Naturals",
-//   description:
-//     "Training page.",
-// };
+export const metadata = {
+  title: "Training- Sienna Naturals",
+  description:
+    "Training page.",
+};
 
 const Page = () => {
   return (
