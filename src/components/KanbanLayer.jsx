@@ -1,3 +1,4 @@
+'use client'; 
 import KanbanBoard from "./child/KanbanBoard";
 
 const KanbanLayer = () => {

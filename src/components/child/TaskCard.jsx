@@ -1,3 +1,4 @@
+'use client'; 
 import React from 'react';
 import { Draggable } from '@hello-pangea/dnd';
 import { Icon } from '@iconify/react/dist/iconify.js';
