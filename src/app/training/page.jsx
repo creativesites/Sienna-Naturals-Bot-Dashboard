@@ -4,11 +4,11 @@ import KanbanLayer from "@/components/KanbanLayer";
 import MasterLayout from "@/masterLayout/MasterLayout";
 
 
-export const metadata = {
-  title: "Training- Sienna Naturals",
-  description:
-    "Training page.",
-};
+// export const metadata = {
+//   title: "Training- Sienna Naturals",
+//   description:
+//     "Training page.",
+// };
 
 const Page = () => {
   return (
