@@ -9,6 +9,7 @@ import { v4 as uuidv4 } from "uuid";
 import { toast } from 'react-toastify';
 import { Suspense } from 'react';
 import Loading from "../loading";
+import { analyzeImage } from '@/helper/genkit';
 
 const initialData = {
   columns: {
@@ -309,18 +310,7 @@ const Page = () => {
         }
   
         // Analyze with GenKit
-        const response = await fetch('/api/analyze-image', {
-          method: 'POST',
-          body: JSON.stringify({
-            imageUrl,
-            associatedProduct: associatedProduct || null
-          }),
-          headers: {
-            'Content-Type': 'application/json'
-          }
-        });
-  
-        if (!response.ok) throw new Error('Analysis failed');
+        const response = await analyzeImage(imageUrl, associatedProduct);
   
         const { productName, description, trainingPairs } = await response.json();
   
