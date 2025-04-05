@@ -9,6 +9,8 @@ export const config = {
 
 export async function POST(request) {
   try {
+    let result = null;
+  if (process.env.BUILD_ENVIRONMENT !== 'local') {
     const { imageUrl, associatedProduct } = await request.json();
     console.log('analysis api recieved img url is:', imageUrl)
     if (!imageUrl) {
@@ -18,8 +20,10 @@ export async function POST(request) {
       );
     }
 
-    const result = await analyzeImage(imageUrl, associatedProduct);
+    result = await analyzeImage(imageUrl, associatedProduct);
     console.log('result', result)
+  }
+    
     return NextResponse.json(result);
   } catch (error) {
     console.error('Analysis error:', error);

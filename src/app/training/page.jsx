@@ -7,6 +7,8 @@ import AddEditTaskModal from "@/components/child/AddEditTaskModal";
 import { DragDropContext } from "@hello-pangea/dnd";
 import { v4 as uuidv4 } from "uuid";
 import { toast } from 'react-toastify';
+import { Suspense } from 'react';
+import Loading from "../loading";
 
 const initialData = {
   columns: {
@@ -717,48 +719,49 @@ const Page = () => {
       <MasterLayout>
         {/* Breadcrumb */}
         <Breadcrumb title='Kanban' />
+        <Suspense fallback={<Fallback />}>
+          <div className='overflow-x-auto scroll-sm pb-8'>
+            <div className="kanban-wrapper p-4">
+              <DragDropContext onDragEnd={onDragEnd}>
+                <div className="d-flex align-items-start gap-4" style={{ overflowX: "auto" }}>
+                  {data.columnOrder.map((columnId) => {
+                    const column = data.columns[columnId];
+                    const tasks = column.taskIds
+                      .map(taskId => data.tasks.find(task => task.id === taskId))
+                      .filter(Boolean);
 
-        <div className='overflow-x-auto scroll-sm pb-8'>
-          <div className="kanban-wrapper p-4">
-            <DragDropContext onDragEnd={onDragEnd}>
-              <div className="d-flex align-items-start gap-4" style={{ overflowX: "auto" }}>
-                {data.columnOrder.map((columnId) => {
-                  const column = data.columns[columnId];
-                  const tasks = column.taskIds
-                    .map(taskId => data.tasks.find(task => task.id === taskId))
-                    .filter(Boolean);
+                    return (
+                      <Column
+                        key={column.id}
+                        column={column}
+                        tasks={tasks}
+                        onAddTask={handleAddTask}
+                        onEditTask={handleEditTask}
+                        onDeleteTask={handleDeleteTask}
+                        onDuplicateTask={handleDuplicateTask}
+                        onTrainBot={handleTrainBot}
+                        isAnalyzing={isAnalyzing}
+                        onAnalyzeImage={handleAnalyzeImage}
+                        isTraining={isTraining}
+                      />
+                    );
+                  })}
+                </div>
+              </DragDropContext>
 
-                  return (
-                    <Column
-                      key={column.id}
-                      column={column}
-                      tasks={tasks}
-                      onAddTask={handleAddTask}
-                      onEditTask={handleEditTask}
-                      onDeleteTask={handleDeleteTask}
-                      onDuplicateTask={handleDuplicateTask}
-                      onTrainBot={handleTrainBot}
-                      isAnalyzing={isAnalyzing}
-                      onAnalyzeImage={handleAnalyzeImage}
-                      isTraining={isTraining}
-                    />
-                  );
-                })}
-              </div>
-            </DragDropContext>
-
-            <AddEditTaskModal
-              show={showModal}
-              handleClose={() => setShowModal(false)}
-              handleSave={handleSaveTask}
-              task={currentTask}
-              setCurrentTask={setCurrentTask}
-              isAnalyzing={isAnalyzing}
-              products={products}
-              loadingProducts={loadingProducts}
-            />
+              <AddEditTaskModal
+                show={showModal}
+                handleClose={() => setShowModal(false)}
+                handleSave={handleSaveTask}
+                task={currentTask}
+                setCurrentTask={setCurrentTask}
+                isAnalyzing={isAnalyzing}
+                products={products}
+                loadingProducts={loadingProducts}
+              />
+            </div>
           </div>
-        </div>
+        </Suspense>
       </MasterLayout>
     </>
   );
