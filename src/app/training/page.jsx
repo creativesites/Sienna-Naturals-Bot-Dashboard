@@ -2,8 +2,8 @@
 import Breadcrumb from "@/components/Breadcrumb";
 import MasterLayout from "@/masterLayout/MasterLayout";
 import { useState, useEffect } from "react";
-import Column from "./Column";
-import AddEditTaskModal from "./AddEditTaskModal";
+import Column from "@/components/child/Column";
+import AddEditTaskModal from "@/components/child/AddEditTaskModal";
 import { DragDropContext } from "@hello-pangea/dnd";
 import { v4 as uuidv4 } from "uuid";
 import { toast } from 'react-toastify';
