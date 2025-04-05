@@ -233,7 +233,6 @@ const KanbanBoard = () => {
     }
   };
 
-
   const handleDuplicateTask = (taskId, columnId) => {
     const task = data.tasks.find(t => t.id === taskId);
     if (!task) return;
