@@ -1,4 +1,3 @@
-
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   reactStrictMode: false,
@@ -11,12 +10,12 @@ const nextConfig = {
       },
       {
         protocol: 'https',
-        hostname: 'cdn.shopify.com', // Example for Sienna Naturals CDN (adjust if different)
-        pathname: '/**', // Allow all paths from Sienna Naturals CDN
+        hostname: 'cdn.shopify.com',
+        pathname: '/**',
       },
       {
         protocol: 'https',
-        hostname: 'images.unsplash.com', // Keep optimization for other domains you might use
+        hostname: 'images.unsplash.com',
       },
       {
         protocol: 'https',
@@ -24,40 +23,22 @@ const nextConfig = {
       },
       {
         protocol: 'https',
-        hostname: 'sn-uploads.global.ssl.fastly.net', // sienna naturals cdn domain
+        hostname: 'sn-uploads.global.ssl.fastly.net',
       },
       {
         protocol: 'https',
-        hostname: 'www.siennanaturals.com', // Sienna Naturals domain (with www)
+        hostname: 'www.siennanaturals.com',
       },
       {
         protocol: 'https',
-        hostname: 'siennanaturals.com', // Sienna Naturals domain (without www)
-      }
+        hostname: 'siennanaturals.com',
+      },
     ],
   },
-  // Add these new settings for module resolution
-  webpack: (config, { buildId, dev, isServer, defaultLoaders, webpack }) => {
-    // Add a resolver plugin that explicitly handles @/ paths
-    config.resolve.plugins = config.resolve.plugins || [];
-    
-    // Add support for resolving TypeScript paths
-    if (!config.resolve.alias) {
-      config.resolve.alias = {};
-    }
-    
-    config.resolve.alias['@'] = require('path').resolve(__dirname, 'src');
-    
-    // Important: Return the modified config
-    return config;
-  },
-  // Enable experimental features that might help with module resolution
+  // Add experimental configuration to skip prerendering
   experimental: {
-    externalDir: true,  // Helps with monorepo setups if applicable
-    modularizeImports: {
-      // You can add specific package optimizations here if needed
-    }
-  }
+    unstable_excludeFiles: ['/app/training/page.jsx'], // Path relative to the project root
+  },
 };
 
 module.exports = nextConfig;
