@@ -3,9 +3,6 @@ import React from 'react';
 import { Draggable } from '@hello-pangea/dnd';
 import { Icon } from '@iconify/react/dist/iconify.js';
 import { Badge } from 'react-bootstrap';
-import Skeleton from 'react-loading-skeleton'
-import 'react-loading-skeleton/dist/skeleton.css'
-import { CodeBlock, dracula } from 'react-code-blocks';
 import ReactJson from 'react-json-view'
 
 const TaskCard = ({ task, index, onEdit, onDelete, onDuplicate, onTrainBot, isAnalyzing, onAnalyzeImage, isTraining }) => {

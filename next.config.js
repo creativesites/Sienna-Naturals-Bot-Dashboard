@@ -53,7 +53,7 @@ const nextConfig = {
   },
   // Enable experimental features that might help with module resolution
   experimental: {
-    ppr: 'incremental',
+    // ppr: 'incremental',
     externalDir: true,  // Helps with monorepo setups if applicable
     modularizeImports: {
       // You can add specific package optimizations here if needed
