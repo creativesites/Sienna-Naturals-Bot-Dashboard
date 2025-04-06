@@ -11,6 +11,8 @@ import { Suspense } from 'react';
 import Loading from "../loading";
 import { analyzeImage } from '@/helper/genkit';
 
+export const experimental_ppr = true
+
 const initialData = {
   columns: {
     "column-1": {
@@ -709,7 +711,7 @@ const Page = () => {
       <MasterLayout>
         {/* Breadcrumb */}
         <Breadcrumb title='Kanban' />
-        <Suspense fallback={<Fallback />}>
+        <Suspense fallback={<Loading/>}>
           <div className='overflow-x-auto scroll-sm pb-8'>
             <div className="kanban-wrapper p-4">
               <DragDropContext onDragEnd={onDragEnd}>
