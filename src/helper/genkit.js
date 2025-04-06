@@ -92,6 +92,7 @@ export const analyzeImage = ai.defineFlow(
           .map(line => JSON.parse(line));
         delete result.trainingData;
       } catch (e) {
+        console.log(e)
         result.trainingPairs = [];
       }
     }

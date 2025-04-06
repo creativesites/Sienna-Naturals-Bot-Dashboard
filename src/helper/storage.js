@@ -2,16 +2,28 @@
 
 import { Storage } from "@google-cloud/storage";
 
-const storageConfig = JSON.parse(process.env.GCLOUD_SERVICE_ACCOUNT_KEY);
+export async function getStorage() {
+  if (!process.env.GCLOUD_SERVICE_ACCOUNT_KEY) {
+    throw new Error('Missing GCLOUD_SERVICE_ACCOUNT_KEY');
+  }
 
-const storage = new Storage({
-  credentials: storageConfig
-});
+  // Parse ONLY at runtime (not during build)
+  const credentials = JSON.parse(process.env.GCLOUD_SERVICE_ACCOUNT_KEY);
+  
+  return new Storage({
+    projectId: credentials.project_id,
+    credentials: {
+      client_email: credentials.client_email,
+      private_key: credentials.private_key
+    }
+  });
+}
 
 const bucketName = "sienna-naturals-files-upload";
 
 export async function uploadFile(fileBuffer, fileName, contentType) {
     try {
+      const storage = await getStorage();
       const bucket = storage.bucket(bucketName);
       const file = bucket.file(`uploads/${fileName}`);
       

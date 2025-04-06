@@ -101,7 +101,6 @@ const TaskCard = ({ task, index, onEdit, onDelete, onDuplicate, onTrainBot, isAn
                             <span className="kanban-tag fw-semibold">{task.tag}</span>
                         </button>
                     )}
-
                     {task.trainingData && typeof window !== 'undefined' && (
                         <div className="mb-2">
                           <small className="text-muted d-block mb-1">Training Data:</small>
