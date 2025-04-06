@@ -1,8 +1,8 @@
 "use client";
 import { useState, useEffect } from "react";
-// import Column from "./Column";
+import Column from "./Column";
 import AddEditTaskModal from "./AddEditTaskModal";
-// import { DragDropContext } from "@hello-pangea/dnd";
+import { DragDropContext } from "@hello-pangea/dnd";
 import { v4 as uuidv4 } from "uuid";
 import { toast } from 'react-toastify';
 
@@ -705,7 +705,7 @@ const KanbanBoard = () => {
 
   return (
     <div className="kanban-wrapper p-4">
-      {/* <DragDropContext onDragEnd={onDragEnd}>
+      <DragDropContext onDragEnd={onDragEnd}>
         <div className="d-flex align-items-start gap-4" style={{ overflowX: "auto" }}>
           {data.columnOrder.map((columnId) => {
             const column = data.columns[columnId];
@@ -730,7 +730,7 @@ const KanbanBoard = () => {
             );
           })}
         </div>
-      </DragDropContext> */}
+      </DragDropContext>
 
       <AddEditTaskModal
         show={showModal}

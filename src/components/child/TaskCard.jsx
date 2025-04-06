@@ -3,7 +3,15 @@ import React from 'react';
 import { Draggable } from '@hello-pangea/dnd';
 import { Icon } from '@iconify/react/dist/iconify.js';
 import { Badge } from 'react-bootstrap';
-import ReactJson from 'react-json-view'
+//import ReactJson from 'react-json-view'
+import JsonView from '@uiw/react-json-view';
+import { lightTheme } from '@uiw/react-json-view/light';
+import { darkTheme } from '@uiw/react-json-view/dark';
+import { nordTheme } from '@uiw/react-json-view/nord';
+import { githubLightTheme } from '@uiw/react-json-view/githubLight';
+import { githubDarkTheme } from '@uiw/react-json-view/githubDark';
+import { vscodeTheme } from '@uiw/react-json-view/vscode';
+
 
 const TaskCard = ({ task, index, onEdit, onDelete, onDuplicate, onTrainBot, isAnalyzing, onAnalyzeImage, isTraining }) => {
     return (
@@ -94,7 +102,7 @@ const TaskCard = ({ task, index, onEdit, onDelete, onDuplicate, onTrainBot, isAn
                         </button>
                     )}
 
-                    {task.trainingData && (
+                    {task.trainingData && typeof window !== 'undefined' && (
                         <div className="mb-2">
                           <small className="text-muted d-block mb-1">Training Data:</small>
                           <div className="bg-light p-2 rounded small" style={{
@@ -108,12 +116,13 @@ const TaskCard = ({ task, index, onEdit, onDelete, onDuplicate, onTrainBot, isAn
                                   ? JSON.parse(task.trainingData)
                                   : task.trainingData;
 
-                                return <ReactJson
-                                  src={data}
-                                  displayDataTypes={false}
-                                  collapsed={1}
-                                  style={{ fontSize: '12px' }}
-                                />;
+                                // return <ReactJson
+                                //   src={data}
+                                //   displayDataTypes={false}
+                                //   collapsed={1}
+                                //   style={{ fontSize: '12px' }}
+                                // />;
+                                return <JsonView value={data} style={lightTheme} />
                               } catch (e) {
                                 // Fallback display if parsing fails
                                 return (
