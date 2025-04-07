@@ -1,5 +1,7 @@
+
 'use server';
 
+import vision from '@google-cloud/vision';
 import { gemini20Flash, googleAI, gemini25ProExp0325 } from "@genkit-ai/googleai";
 import { genkit, z } from "genkit";
 import { pgClient } from '@/helper/database';
@@ -11,20 +13,32 @@ const ai = genkit({
   model: gemini25ProExp0325,
 });
 
-async function getAllProducts() {
-  try {
-    const result = await pgClient.query('SELECT * FROM products');
-    return result.rows;
-  } catch (error) {
-    console.error("Error fetching products:", error);
-    return [];
+export async function getVisionClient() {
+  if (!process.env.GCLOUD_SERVICE_ACCOUNT_KEY) {
+    throw new Error('Missing GCLOUD_SERVICE_ACCOUNT_KEY');
   }
+  console.log(process.env.GCLOUD_SERVICE_ACCOUNT_KEY);
+  const credentials = JSON.parse(process.env.GCLOUD_SERVICE_ACCOUNT_KEY);
+
+  return new vision.ImageAnnotatorClient({
+    projectId: credentials.project_id,
+    credentials: {
+      client_email: credentials.client_email,
+      private_key: credentials.private_key,
+    }
+  });
 }
 
-export const analyzeImage = ai.defineFlow(
+export const postAnalyzeImage = ai.defineFlow(
   {
     name: "analyzeImage",
-    inputSchema: z.string(), 
+    inputSchema: z.object({
+      productName: z.string().nullable(),
+      title: z.string(),
+      tag: z.string(),
+      description: z.string(),
+      associatedProduct: z.any().optional(),
+    }), 
     outputSchema: z.object({
       productName: z.string().nullable(),
       description: z.string(), 
@@ -34,22 +48,28 @@ export const analyzeImage = ai.defineFlow(
       }))
     })
   },
-  async (fileUrl, associatedProduct) => {
-    const products = await getAllProducts();
-    const testUrl = 'https://drive.google.com/file/d/19YLCHxVZoY18OG6mov00_WS_DajMQd70/view?usp=drive_link'
-    const analysisPrompt = `
-    You are an AI model specializing in extracting structured, chatbot-trainable information from Sienna Naturals marketing images.
+  async ({ productName, title, tag, description, associatedProduct }) => {
 
-    You will be given an image that may contain product usage guides, rituals, comparisons, instructions, or claims. Your goal is to return a structured JSON output that captures the key product details and creates relevant question-answer training pairs for a chatbot.
+    console.log('ai refiner recieved desc', description)
+    console.log('ai recieved data:', associatedProduct, title, tag, productName)
+    //const products = await getAllProducts();
+    //const testUrl = 'https://drive.google.com/file/d/19YLCHxVZoY18OG6mov00_WS_DajMQd70/view?usp=drive_link'
+    const analysisPrompt = `
+    You are an AI model specializing in extracting structured, chatbot-trainable information from text extracted from image only. you are not to create any additional questions based on given product.
+    You are to only work with generating questions only from text extracted from image. You are to only refine text extracted from image, only adding the product name, if any only and refining the content for in-context chatbot training without changing any of the information.
+    The questions should be giuded by the usern given title ${title} and tag ${tag}.
+    - ONLY use the image text provided (do not hallucinate or invent new facts).
+    - Use the given product name (if any) to enhance the result.
+    - The title and tag are meant to guide the style and content of the questions.
+    - The associated product (if any) may be used to align and clarify the context.
+
+   You will be given the image text already extracted using vision api. Your goal is to return a structured JSON output that captures the key product details and creates relevant question-answer training pairs for a chatbot in-context training as well as model fine tuning.
 
     Follow these rules:
-      1.	Only extract visible text—never invent information.
-      2.	If a product name is visible and matches a known product, return it; otherwise, set "productName" to null.
-      3.	Provide a concise but meaningful description using only the extracted text.
-      4.	Create 1-3 high-quality Q&A training pairs, ensuring both question and answer strictly reflect the image content.
-      5.	The output must be valid JSON, where:
-      •	"description" is always a single string (not an array).
-      •	"trainingPairs" is an array of objects with "question" and "answer".
+      1.  The product for the text in question is provided, refine the description and training pairs question and answers reconciling them with the product details.
+      
+      • "description" is always a single string (not an array).
+      • "trainingPairs" is an array of objects with "question" and "answer".
 
     Example Output Format:
     {
@@ -66,15 +86,16 @@ export const analyzeImage = ai.defineFlow(
         }
       ]
     }
-    given image url: ${fileUrl}
-    associated product: ${associatedProduct?JSON.stringify(associatedProduct):''}
-    all other Sienna Naturals products for context: ${products??JSON.stringify(products)}
+    text extracted from image: ${description}
+    productName: ${productName}
+    user given title for training image: ${title}
+    user given tag for training image: ${tag}
+    the product is: ${associatedProduct?JSON.stringify(associatedProduct):''}
     `;
 
     const { output } = await ai.generate({
       model: gemini25ProExp0325,
       prompt: analysisPrompt,
-      image: { url: testUrl },
       config: { 
         temperature: 0.3,
         responseMimeType: "application/json" 
@@ -96,6 +117,7 @@ export const analyzeImage = ai.defineFlow(
         result.trainingPairs = [];
       }
     }
+    //result.productName = associatedProduct.name
 
     // Ensure description is a string
     if (Array.isArray(result.description)) {
@@ -105,3 +127,68 @@ export const analyzeImage = ai.defineFlow(
     return result;
   }
 );
+export async function analyzeImage(fileUrl, associatedProduct, title, tag) {
+  try {
+    const client = await getVisionClient();
+    console.log('recieved data:', associatedProduct, title, tag)
+    // Vision expects a `gs://` URL, so convert public URL to that
+    const gsUrl = fileUrl.replace(
+      'https://storage.googleapis.com/sienna-naturals-files-upload/',
+      'gs://sienna-naturals-files-upload/'
+    );
+
+    const [result] = await client.textDetection(gsUrl);
+    const detections = result.textAnnotations;
+    const extractedText = detections.length > 0 ? detections[0].description : '';
+
+    // Extract product name if it's in the text (basic check)
+    const knownProductName = associatedProduct?.name || null;
+    const productName = extractedText.includes(knownProductName) ? knownProductName : null;
+
+    console.log('extracted text:', extractedText)
+
+    // Generate basic training pairs from text
+    const trainingPairs = [];
+
+    if (extractedText) {
+      trainingPairs.push({
+        question: `What does this image say about ${productName || 'the product'}?`,
+        answer: extractedText.trim(),
+      });
+
+      if (title) {
+        trainingPairs.push({
+          question: `What is the image titled "${title}" about?`,
+          answer: extractedText.trim(),
+        });
+      }
+    }
+    let parsedAssociatedProduct = associatedProduct;
+
+if (typeof associatedProduct === 'string') {
+  try {
+    parsedAssociatedProduct = JSON.parse(associatedProduct);
+  } catch (err) {
+    console.warn('Failed to parse associatedProduct:', err);
+    parsedAssociatedProduct = null; // fallback or keep as string depending on your needs
+  }
+}
+const safeTag = typeof tag === 'string' ? tag : '';
+const safeTitle = typeof title === 'string' ? title : '';
+const refinedResponse = await postAnalyzeImage({
+  productName: knownProductName,
+  title: safeTitle,
+  tag: safeTag,
+  description: extractedText.trim(),
+  associatedProduct: parsedAssociatedProduct,
+});
+    return refinedResponse;
+  } catch (error) {
+    console.error("OCR error:", error);
+    return {
+      productName: null,
+      description: '',
+      trainingPairs: []
+    };
+  }
+}

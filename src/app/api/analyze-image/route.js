@@ -11,7 +11,7 @@ export async function POST(request) {
   try {
     let result = null;
   if (process.env.BUILD_ENVIRONMENT !== 'local') {
-    const { imageUrl, associatedProduct } = await request.json();
+    const { imageUrl, associatedProduct, title, tag } = await request.json();
     console.log('analysis api recieved img url is:', imageUrl)
     if (!imageUrl) {
       return NextResponse.json(
@@ -20,7 +20,7 @@ export async function POST(request) {
       );
     }
 
-    result = await analyzeImage(imageUrl, associatedProduct);
+    result = await analyzeImage(imageUrl, associatedProduct, title, tag);
     console.log('result', result)
   }
     

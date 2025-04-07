@@ -93,7 +93,7 @@ export async function PUT(request, { params }) {
         image_url,
         product_id,
         parsedTrainingData,
-        "completed",
+        trainingStatus,
         taskId
       ]
     );

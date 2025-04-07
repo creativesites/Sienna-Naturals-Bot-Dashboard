@@ -53,7 +53,7 @@ const KanbanBoard = () => {
         const productsData = await productsResponse.json();
         const tasksData = await tasksResponse.json();
 
-
+        console.log('products:', productsData.products)
         setProducts(productsData.products);
 
         // Transform database tasks into our kanban format
@@ -75,6 +75,7 @@ const KanbanBoard = () => {
             date: new Date(task.createdAt).toISOString().split('T')[0]
           };
         });
+        console.log('tasks', tasks)
 
         // Organize tasks into columns
         const newColumn1 = {
@@ -287,7 +288,7 @@ const KanbanBoard = () => {
     }
   };
 
-  const analyzeImage = async (imageFile, taskId, associatedProduct) => {
+  const analyzeImage = async (imageFile, taskId, associatedProduct, title, tag) => {
     setIsAnalyzing(true);
     try {
       // Get a URL for the image (or use existing if already saved)
@@ -302,7 +303,9 @@ const KanbanBoard = () => {
         method: 'POST',
         body: JSON.stringify({
           imageUrl,
-          associatedProduct: associatedProduct || null
+          associatedProduct: associatedProduct || null,
+          title,
+          tag
         }),
         headers: {
           'Content-Type': 'application/json'
@@ -325,7 +328,6 @@ const KanbanBoard = () => {
           if (task.id === taskId) {
             return {
               ...task,
-              title: productName || task.title,
               description: description || task.description,
               trainingData,
               descriptionLoading: false // Set loading to false on success
@@ -504,7 +506,7 @@ const KanbanBoard = () => {
 
         // Analyze if image was changed
         if (task.imageFile) {
-          await analyzeImage(task.imageFile, task.id, task.associatedProduct);
+          await analyzeImage(task.imageFile, task.id, task.associatedProduct, task.title, task.tag);
         }
       } else {
         // Create new task
@@ -542,7 +544,7 @@ const KanbanBoard = () => {
 
         // Analyze if image was provided
         if (task.imageFile) {
-          await analyzeImage(task.imageFile, newId, task.associatedProduct);
+          await analyzeImage(task.imageFile, newId, task.associatedProduct, task.title, task.tag);
         }
       }
 
@@ -699,7 +701,7 @@ const KanbanBoard = () => {
 
     const task = data.tasks.find(t => t.id === taskId);
     if (task) {
-      analyzeImage(null, taskId, task.associatedProduct);
+      analyzeImage(null, taskId, task.associatedProduct, task.title, task.tag);
     }
   };
 
