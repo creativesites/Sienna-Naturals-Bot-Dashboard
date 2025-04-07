@@ -3,18 +3,21 @@
 import { Storage } from "@google-cloud/storage";
 
 export async function getStorage() {
-  if (!process.env.GCLOUD_SERVICE_ACCOUNT_KEY) {
-    throw new Error('Missing GCLOUD_SERVICE_ACCOUNT_KEY');
+  const {
+    GCLOUD_PROJECT_ID,
+    GCLOUD_CLIENT_EMAIL,
+    GCLOUD_PRIVATE_KEY
+  } = process.env;
+
+  if (!GCLOUD_PROJECT_ID || !GCLOUD_CLIENT_EMAIL || !GCLOUD_PRIVATE_KEY) {
+    throw new Error('Missing Google Cloud credentials in environment variables');
   }
 
-  // Parse ONLY at runtime (not during build)
-  const credentials = JSON.parse(process.env.GCLOUD_SERVICE_ACCOUNT_KEY);
-  
   return new Storage({
-    projectId: credentials.project_id,
+    projectId: GCLOUD_PROJECT_ID,
     credentials: {
-      client_email: credentials.client_email,
-      private_key: credentials.private_key
+      client_email: GCLOUD_CLIENT_EMAIL,
+      private_key: GCLOUD_PRIVATE_KEY.replace(/\\n/g, '\n'),
     }
   });
 }
