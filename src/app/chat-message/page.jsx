@@ -18,7 +18,7 @@ const Page = () => {
         {/*<Breadcrumb title='Conversations' />*/}
           <div className="myavana-dashboard-page-container">
               <ChatMessageLayer user_id={''}/>
-              <EarningStaticOne />
+              {/* <EarningStaticOne /> */}
           </div>
 
 

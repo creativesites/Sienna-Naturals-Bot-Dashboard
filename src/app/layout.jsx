@@ -8,7 +8,8 @@ import {
     SignedIn,
     SignedOut,
     UserButton,
-} from '@clerk/nextjs'
+} from '@clerk/nextjs';
+import { CopilotKit} from "@copilotkit/react-core";
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
@@ -21,6 +22,7 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
       <ClerkProvider>
+        <CopilotKit publicApiKey="ck_pub_41f59aaa5376367e83571107f6f3af80"> 
     <html lang='en'>
       <PluginInit />
       <body suppressHydrationWarning={true}>
@@ -39,6 +41,7 @@ export default function RootLayout({ children }) {
         />
       </body>
     </html>
+    </CopilotKit>
       </ClerkProvider>
   );
 }

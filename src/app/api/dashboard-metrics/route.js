@@ -25,12 +25,12 @@ export async function GET(request) {
 
     // Active Users (filtered by timeframe)
     const activeUsersQuery = await pgClient.query(
-      `SELECT COUNT(DISTINCT user_id) FROM conversations WHERE created_at >= NOW() - INTERVAL '${timeframeDays} days'`
+      `SELECT COUNT(DISTINCT user_id) FROM users WHERE created_at >= NOW() - INTERVAL '${timeframeDays} days'`
     );
     metrics.activeUsers = parseInt(activeUsersQuery.rows[0].count, 10);
 
     // Total Hair Profiles
-    const hairProfilesQuery = await pgClient.query('SELECT COUNT(*) FROM user_hair_profiles');
+    const hairProfilesQuery = await pgClient.query('SELECT COUNT(*) FROM users WHERE hair_type IS NOT NULL');
     metrics.totalHairProfiles = parseInt(hairProfilesQuery.rows[0].count, 10);
 
     // Calculate conversion rate (users who had conversations vs total users)
@@ -80,14 +80,14 @@ export async function GET(request) {
       metrics.growthRate = 0;
     }
 
-    // Product Interactions (from recommendations table)
+    // Product Interactions (from product_recommendations table)
     try {
       const productInteractionsQuery = await pgClient.query(
-        `SELECT COUNT(*) FROM recommendations WHERE created_at >= NOW() - INTERVAL '${timeframeDays} days'`
+        `SELECT COUNT(*) FROM product_recommendations WHERE created_at >= NOW() - INTERVAL '${timeframeDays} days'`
       );
       metrics.productInteractions = parseInt(productInteractionsQuery.rows[0].count, 10);
     } catch (error) {
-      console.log('Recommendations table not accessible, setting product interactions to 0');
+      console.log('Product_recommendations table not accessible, setting product interactions to 0');
       metrics.productInteractions = 0;
     }
 
@@ -97,7 +97,7 @@ export async function GET(request) {
       const successfulConversationsQuery = await pgClient.query(`
         SELECT COUNT(DISTINCT c.conversation_id) 
         FROM conversations c
-        INNER JOIN recommendations r ON c.user_id = r.user_id
+        INNER JOIN product_recommendations r ON c.user_id = r.user_id
         WHERE c.created_at >= NOW() - INTERVAL '${timeframeDays} days'
         AND r.created_at >= c.created_at
       `);
@@ -154,7 +154,7 @@ export async function GET(request) {
         (metrics.activeUsers > 0 ? '100' : '0');
 
       const prevProductInteractionsQuery = await pgClient.query(
-        `SELECT COUNT(*) FROM recommendations 
+        `SELECT COUNT(*) FROM product_recommendations 
          WHERE created_at >= NOW() - INTERVAL '${timeframeDays * 2} days' 
          AND created_at < NOW() - INTERVAL '${timeframeDays} days'`
       );

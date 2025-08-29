@@ -40,8 +40,11 @@
   --sienna-gradient-pearl: linear-gradient(135deg, var(--sienna-pearl) 0%, var(--sienna-cream) 100%);
   
   /* Shadows & Effects */
+  --sienna-shadow-sm: 0 1px 3px rgba(34, 31, 31, 0.06);
   --sienna-shadow-soft: 0 2px 8px rgba(34, 31, 31, 0.08);
+  --sienna-shadow-md: 0 4px 12px rgba(34, 31, 31, 0.10);
   --sienna-shadow-medium: 0 4px 20px rgba(34, 31, 31, 0.12);
+  --sienna-shadow-lg: 0 6px 24px rgba(34, 31, 31, 0.14);
   --sienna-shadow-strong: 0 8px 32px rgba(34, 31, 31, 0.16);
   --sienna-shadow-luxury: 0 12px 48px rgba(34, 31, 31, 0.20);
   
@@ -64,6 +67,7 @@
   --sienna-radius-md: 12px;
   --sienna-radius-lg: 16px;
   --sienna-radius-xl: 24px;
+  --sienna-radius-full: 9999px;
   
   /* Transitions */
   --sienna-transition-fast: 0.15s ease-out;
@@ -1554,5 +1558,336 @@ body {
   
   .value-text {
     font-size: 1.75rem;
+  }
+}
+
+/* ================================
+   ENHANCED SIDEBAR ANIMATIONS & LAYOUT
+   ================================ */
+
+/* Sienna Premium Sidebar Styling */
+.sienna-sidebar {
+  width: 280px;
+  height: 100vh;
+  background: var(--sienna-white);
+  border-right: 1px solid rgba(145, 169, 150, 0.1);
+  box-shadow: var(--sienna-shadow-md);
+  position: fixed;
+  left: 0;
+  top: 0;
+  z-index: 1000;
+  overflow-x: hidden;
+  overflow-y: auto;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  transform: translateX(0);
+}
+
+/* Minimized sidebar state */
+.sienna-sidebar.active {
+  width: 86px;
+}
+
+/* Smooth hover expansion when minimized */
+.sienna-sidebar.active:hover {
+  width: 280px;
+  box-shadow: var(--sienna-shadow-lg);
+}
+
+/* Mobile sidebar states */
+@media (max-width: 1199px) {
+  .sienna-sidebar {
+    transform: translateX(-100%);
+  }
+  
+  .sienna-sidebar.sidebar-open {
+    transform: translateX(0);
+  }
+}
+
+/* Sidebar brand styling */
+.sienna-sidebar-brand {
+  height: 72px;
+  padding: 1rem 1.5rem;
+  border-bottom: 1px solid rgba(145, 169, 150, 0.1);
+  display: flex;
+  align-items: center;
+  transition: all 0.3s ease;
+}
+
+.sienna-sidebar-brand .sidebar-logo {
+  display: flex;
+  align-items: center;
+  text-decoration: none;
+  width: 100%;
+}
+
+/* Logo visibility states */
+.sienna-sidebar .light-logo,
+.sienna-sidebar .dark-logo {
+  height: 40px;
+  width: auto;
+  transition: all 0.3s ease;
+}
+
+.sienna-sidebar .logo-icon {
+  height: 32px;
+  width: 32px;
+  display: none;
+  transition: all 0.3s ease;
+}
+
+/* Minimized logo states */
+.sienna-sidebar.active .light-logo,
+.sienna-sidebar.active .dark-logo {
+  display: none;
+}
+
+.sienna-sidebar.active .logo-icon {
+  display: block;
+}
+
+/* Hover state logo visibility */
+.sienna-sidebar.active:hover .light-logo,
+.sienna-sidebar.active:hover .dark-logo {
+  display: block;
+}
+
+.sienna-sidebar.active:hover .logo-icon {
+  display: none;
+}
+
+/* Navigation styling */
+.sienna-sidebar-nav {
+  padding: 1.5rem 0;
+  height: calc(100vh - 72px);
+  overflow-y: auto;
+}
+
+/* Menu items */
+.sienna-nav-item {
+  margin: 0 1rem 0.5rem 1rem;
+  list-style: none;
+}
+
+.sienna-nav-link {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.75rem 1rem;
+  color: var(--sienna-terra);
+  text-decoration: none;
+  border-radius: var(--sienna-radius-md);
+  font-weight: 500;
+  font-size: 0.95rem;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+  overflow: hidden;
+}
+
+.sienna-nav-link:hover {
+  background: rgba(145, 169, 150, 0.08);
+  color: var(--sienna-sage);
+  text-decoration: none;
+  transform: translateX(4px);
+}
+
+.sienna-nav-link.active {
+  background: var(--sienna-sage);
+  color: var(--sienna-white);
+  box-shadow: var(--sienna-shadow-sm);
+}
+
+.sienna-nav-link.active::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 4px;
+  background: var(--sienna-emerald);
+}
+
+/* Navigation icons */
+.sienna-nav-icon {
+  font-size: 1.25rem;
+  flex-shrink: 0;
+  transition: all 0.3s ease;
+}
+
+.sienna-nav-link span {
+  transition: all 0.3s ease;
+  font-weight: 500;
+}
+
+/* Minimized state text visibility */
+.sienna-sidebar.active .sienna-nav-link span {
+  opacity: 0;
+  transform: translateX(-10px);
+  pointer-events: none;
+}
+
+.sienna-sidebar.active:hover .sienna-nav-link span {
+  opacity: 1;
+  transform: translateX(0);
+  pointer-events: auto;
+}
+
+/* Minimized state icon positioning */
+.sienna-sidebar.active .sienna-nav-link {
+  justify-content: center;
+  padding: 0.75rem 0.5rem;
+}
+
+.sienna-sidebar.active:hover .sienna-nav-link {
+  justify-content: flex-start;
+  padding: 0.75rem 1rem;
+}
+
+/* Group titles */
+.sidebar-menu-group-title {
+  color: var(--sienna-ash);
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  margin: 2rem 1.5rem 1rem 1.5rem;
+  padding: 0;
+  list-style: none;
+  transition: all 0.3s ease;
+}
+
+/* Hide group titles when minimized */
+.sienna-sidebar.active .sidebar-menu-group-title {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.sienna-sidebar.active:hover .sidebar-menu-group-title {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+/* Scrollbar styling */
+.sienna-sidebar-nav::-webkit-scrollbar {
+  width: 4px;
+}
+
+.sienna-sidebar-nav::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.sienna-sidebar-nav::-webkit-scrollbar-thumb {
+  background: rgba(145, 169, 150, 0.2);
+  border-radius: 2px;
+}
+
+.sienna-sidebar-nav::-webkit-scrollbar-thumb:hover {
+  background: rgba(145, 169, 150, 0.4);
+}
+
+/* Main content adjustment */
+.dashboard-main {
+  margin-left: 280px;
+  transition: margin-left 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.dashboard-main.active {
+  margin-left: 86px;
+}
+
+@media (max-width: 1199px) {
+  .dashboard-main,
+  .dashboard-main.active {
+    margin-left: 0;
+  }
+}
+
+/* Sidebar close button (mobile) */
+.sidebar-close-btn {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  width: 32px;
+  height: 32px;
+  border: none;
+  background: rgba(145, 169, 150, 0.1);
+  color: var(--sienna-sage);
+  border-radius: var(--sienna-radius-md);
+  display: none;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  z-index: 10;
+}
+
+.sidebar-close-btn:hover {
+  background: rgba(145, 169, 150, 0.2);
+}
+
+@media (max-width: 1199px) {
+  .sidebar-close-btn {
+    display: flex;
+  }
+}
+
+/* Enhanced footer positioning */
+.sienna-main-content {
+  min-height: calc(100vh - 140px);
+  display: flex;
+  flex-direction: column;
+}
+
+.d-footer {
+  margin-top: auto;
+  padding: 1.5rem 2rem;
+  background: var(--sienna-white);
+  border-top: 1px solid rgba(145, 169, 150, 0.1);
+  color: var(--sienna-terra);
+  font-size: 0.9rem;
+}
+
+.d-footer p {
+  margin: 0;
+}
+
+.d-footer .text-primary-600 {
+  color: var(--sienna-sage);
+  font-weight: 600;
+}
+
+/* Dark mode adjustments */
+@media (prefers-color-scheme: dark) {
+  .sienna-sidebar {
+    background: var(--sienna-charcoal);
+    border-right-color: rgba(145, 169, 150, 0.2);
+  }
+  
+  .sienna-sidebar-brand {
+    border-bottom-color: rgba(145, 169, 150, 0.2);
+  }
+  
+  .sienna-nav-link {
+    color: rgba(255, 255, 255, 0.7);
+  }
+  
+  .sienna-nav-link:hover {
+    background: rgba(145, 169, 150, 0.15);
+    color: var(--sienna-white);
+  }
+  
+  .sienna-nav-link.active {
+    background: var(--sienna-sage);
+    color: var(--sienna-white);
+  }
+  
+  .sidebar-menu-group-title {
+    color: rgba(255, 255, 255, 0.5);
+  }
+  
+  .d-footer {
+    background: var(--sienna-charcoal);
+    border-top-color: rgba(145, 169, 150, 0.2);
+    color: rgba(255, 255, 255, 0.7);
   }
 }

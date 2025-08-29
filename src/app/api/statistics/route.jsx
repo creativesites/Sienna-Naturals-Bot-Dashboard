@@ -19,7 +19,7 @@ export async function GET() {
         // const productInteractions = parseInt(productInteractionsQuery.rows[0].count, 10);
 
         // Total Hair Profiles Analyzed
-        const hairProfilesQuery = await pgClient.query('SELECT COUNT(*) FROM user_hair_profiles');
+        const hairProfilesQuery = await pgClient.query('SELECT COUNT(*) FROM users WHERE hair_type IS NOT NULL');
         const hairProfiles = parseInt(hairProfilesQuery.rows[0].count, 10);
 
         // Total Hair Issues
@@ -27,12 +27,12 @@ export async function GET() {
         const totalHairIssues = parseInt(totalHairIssuesQuery.rows[0].count, 10);
 
 
-        // Most Common Hair Concerns (from user_hair_profiles) -- Keep this if you still need it elsewhere
+        // Most Common Hair Concerns (from users table)
         const commonConcernsQuery = await pgClient.query(`
-        SELECT UNNEST(hair_concerns) as concern, COUNT(*) as count
-        FROM user_hair_profiles
-        WHERE hair_concerns IS NOT NULL
-        GROUP BY concern
+        SELECT hair_concerns as concern, COUNT(*) as count
+        FROM users
+        WHERE hair_concerns IS NOT NULL AND hair_concerns != ''
+        GROUP BY hair_concerns
         ORDER BY count DESC
         LIMIT 5
     `);

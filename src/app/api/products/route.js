@@ -34,7 +34,7 @@ export async function GET(request) {
         }
         
         if (category) {
-            whereClause += ` AND product_category ILIKE $${paramIndex}`;
+            whereClause += ` AND category ILIKE $${paramIndex}`;
             queryParams.push(`%${category}%`);
             paramIndex++;
         }
@@ -50,7 +50,7 @@ export async function GET(request) {
                 product_id, 
                 product_name AS name, 
                 description AS general_description,
-                product_category,
+                category,
                 price AS cost, 
                 formula AS details, 
                 image_url AS image,
@@ -106,7 +106,7 @@ export async function GET(request) {
 const productCreateSchema = z.object({
     product_name: z.string().min(1, 'Product name is required').max(255, 'Name too long'),
     description: z.string().min(10, 'Description must be at least 10 characters').max(2000, 'Description too long'),
-    product_category: z.string().min(1, 'Category is required').max(100, 'Category too long'),
+    category: z.string().min(1, 'Category is required').max(100, 'Category too long'),
     price: z.string().min(1, 'Price is required'),
     formula: z.any().optional(),
     image_url: z.string().url('Main image must be a valid URL').optional(),
@@ -128,7 +128,7 @@ export async function POST(request) {
         const {
             product_name,
             description,
-            product_category,
+            category,
             price,
             formula = {},
             image_url,
@@ -156,7 +156,7 @@ export async function POST(request) {
             INSERT INTO products (
                 product_name, 
                 description, 
-                product_category, 
+                category, 
                 price, 
                 formula, 
                 image_url, 
@@ -175,7 +175,7 @@ export async function POST(request) {
         const values = [
             product_name,
             description,
-            product_category,
+            category,
             price,
             JSON.stringify(formula),
             image_url,
