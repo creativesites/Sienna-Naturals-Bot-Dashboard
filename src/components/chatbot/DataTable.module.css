@@ -1,0 +1,70 @@
+/* components/DataTable.module.css */
+.container {
+    background-color: #ffffff; /* White */
+    border: 1px solid #eeece1; /* Sand */
+    border-radius: 8px;
+    padding: 20px;
+    margin: 10px;
+    font-family: 'Archivo', sans-serif;
+    color: #222323; /* Onyx */
+  }
+  
+  .header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+  }
+  
+  .header h2 {
+    font-family: 'Archivo Expanded', sans-serif;
+    font-weight: 600;
+    font-size: 15px;
+    text-transform: uppercase;
+    letter-spacing: -4%;
+    color: #222323; /* Onyx */
+    margin: 0;
+  }
+  
+  .exportButton {
+    background-color: #e7a690; /* Coral */
+    color: #ffffff; /* White */
+    border: none;
+    border-radius: 8px;
+    padding: 10px 20px;
+    font-family: 'Archivo', sans-serif;
+    font-weight: 600;
+    font-size: 10.5pt;
+    cursor: pointer;
+    transition: background-color 0.3s;
+  }
+  
+  .exportButton:hover {
+    background-color: #fce5d7; /* Light Coral */
+    color: #222323; /* Onyx */
+  }
+  
+  .table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+  
+  .table th,
+  .table td {
+    padding: 10px;
+    text-align: left;
+    border-bottom: 1px solid #eeece1; /* Sand */
+    font-family: 'Archivo', sans-serif;
+    font-size: 10.5pt;
+    letter-spacing: -2%;
+    color: #222323; /* Onyx */
+  }
+  
+  .table th {
+    font-weight: 600;
+    background-color: #f5f5f7; /* Stone */
+  }
+  
+  .table tr:last-child td {
+    border-bottom: none;
+  }

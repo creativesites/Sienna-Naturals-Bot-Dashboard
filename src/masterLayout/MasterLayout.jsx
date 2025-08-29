@@ -92,16 +92,16 @@ const MasterLayout = ({ children }) => {
   };
 
   return (
-    <section className={mobileMenu ? "overlay active" : "overlay "}>
-      {/* sidebar */}
+    <section className={`sienna-main-layout ${mobileMenu ? "overlay active" : "overlay"}`}>
+      {/* Premium Sidebar */}
       <aside
-        className={
+        className={`sienna-sidebar ${
           sidebarActive
-            ? "sidebar active "
+            ? "sidebar active"
             : mobileMenu
             ? "sidebar sidebar-open"
             : "sidebar"
-        }
+        }`}
       >
         <button
           onClick={mobileMenuControl}
@@ -110,39 +110,41 @@ const MasterLayout = ({ children }) => {
         >
           <Icon icon='radix-icons:cross-2' />
         </button>
-        <div>
+        <div className="sienna-sidebar-brand">
           <Link href='/' className='sidebar-logo'>
             <img
               src='/assets/images/sienna-logo.svg'
-              alt='site logo'
+              alt='Sienna Naturals'
               className='light-logo'
+              style={{filter: 'none'}}
             />
             <img
               src='/assets/images/sienna-logo.svg'
-              alt='site logo'
+              alt='Sienna Naturals'
               className='dark-logo'
+              style={{filter: 'none'}}
             />
             <img
               src='/assets/images/sienna-logo.svg'
-              alt='site logo'
+              alt='Sienna Naturals'
               className='logo-icon'
+              style={{filter: 'none'}}
             />
           </Link>
         </div>
-        <div className='sidebar-menu-area'>
+        <div className='sienna-sidebar-nav'>
           <ul className='sidebar-menu' id='sidebar-menu'>
-            <li>
-              <Link href='/' className={pathname === "/" ? "active-page" : ""}>
+            <li className={`sienna-nav-item ${pathname === "/" ? "active" : ""}`}>
+              <Link href='/' className={`sienna-nav-link ${pathname === "/" ? "active" : ""}`}>
                 <Icon
                   icon='solar:home-smile-angle-outline'
-                  className='menu-icon'
+                  className='sienna-nav-icon'
                 />
                 <span>Dashboard</span>
               </Link>
-
             </li>
 
-            <li className='sidebar-menu-group-title'>Application</li>
+            <li className='sidebar-menu-group-title' style={{color: 'var(--sienna-ash)', fontSize: '0.75rem', fontWeight: '600', textTransform: 'uppercase', letterSpacing: '0.1em', margin: '2rem 0 1rem 0'}}>Applications</li>
             {/*<li>*/}
             {/*  <Link*/}
             {/*    href='/email'*/}
@@ -152,12 +154,12 @@ const MasterLayout = ({ children }) => {
             {/*    <span>Email</span>*/}
             {/*  </Link>*/}
             {/*</li>*/}
-            <li>
+            <li className={`sienna-nav-item ${pathname === "/chat-message" ? "active" : ""}`}>
               <Link
                 href='/chat-message'
-                className={pathname === "/chat-message" ? "active-page" : ""}
+                className={`sienna-nav-link ${pathname === "/chat-message" ? "active" : ""}`}
               >
-                <Icon icon='bi:chat-dots' className='menu-icon' />
+                <Icon icon='bi:chat-dots' className='sienna-nav-icon' />
                 <span>Conversations</span>
               </Link>
             </li>
@@ -680,16 +682,15 @@ const MasterLayout = ({ children }) => {
             {/*  </Link>*/}
             {/*</li>*/}
 
-            {/* Users Dropdown */}
-            <li >
-              <Link href='/users' className={pathname === "/users" ? "active-page" : ""}>
+            {/* Users */}
+            <li className={`sienna-nav-item ${pathname === "/users" ? "active" : ""}`}>
+              <Link href='/users' className={`sienna-nav-link ${pathname === "/users" ? "active" : ""}`}>
                 <Icon
                   icon='flowbite:users-group-outline'
-                  className='menu-icon'
+                  className='sienna-nav-icon'
                 />
                 <span>Users</span>
               </Link>
-
             </li>
 
             {/* Role & Access Dropdown */}
@@ -871,16 +872,16 @@ const MasterLayout = ({ children }) => {
             {/*</li>*/}
 
           
-            <li>
+            <li className={`sienna-nav-item ${pathname === "/documentation" ? "active" : ""}`}>
               <Link
                 href='/documentation'
-                className={pathname === "/documentation" ? "active-page" : ""}
+                className={`sienna-nav-link ${pathname === "/documentation" ? "active" : ""}`}
               >
                 <Icon
                   icon='mage:message-question-mark-round'
-                  className='menu-icon'
+                  className='sienna-nav-icon'
                 />
-                <span>Documentation.</span>
+                <span>Documentation</span>
               </Link>
             </li>
             {/*<li>*/}
@@ -892,40 +893,40 @@ const MasterLayout = ({ children }) => {
             {/*    <span>404</span>*/}
             {/*  </Link>*/}
             {/*</li>*/}
-            <li className='sidebar-menu-group-title'>Manage Chatbot</li>
-            <li>
+            <li className='sidebar-menu-group-title' style={{color: 'var(--sienna-ash)', fontSize: '0.75rem', fontWeight: '600', textTransform: 'uppercase', letterSpacing: '0.1em', margin: '2rem 0 1rem 0'}}>Manage Chatbot</li>
+            <li className={`sienna-nav-item ${pathname === "/instructions" ? "active" : ""}`}>
               <Link
                 href='/instructions'
-                className={pathname === "/instructions" ? "active-page" : ""}
+                className={`sienna-nav-link ${pathname === "/instructions" ? "active" : ""}`}
               >
-                <Icon icon='octicon:info-24' className='menu-icon' />
-                <span>Additional Chatbot Instructions</span>
+                <Icon icon='octicon:info-24' className='sienna-nav-icon' />
+                <span>Chatbot Instructions</span>
               </Link>
             </li>
-            <li>
-               <Link href='/products'>
-               <Icon icon='mingcute:storage-line' className='menu-icon' />
+            <li className={`sienna-nav-item ${pathname === "/products" ? "active" : ""}`}>
+               <Link href='/products' className={`sienna-nav-link ${pathname === "/products" ? "active" : ""}`}>
+               <Icon icon='mingcute:storage-line' className='sienna-nav-icon' />
                <span>Manage Products</span>
              </Link>
             </li>
-            <li>
+            <li className={`sienna-nav-item ${pathname === "/training" ? "active" : ""}`}>
               <Link
                 href='/training'
-                className={pathname === "/training" ? "active-page" : ""}
+                className={`sienna-nav-link ${pathname === "/training" ? "active" : ""}`}
               >
                 <Icon
                   icon='solar:document-text-outline'
-                  className='menu-icon'
+                  className='sienna-nav-icon'
                 />
                 <span>Chatbot Training</span>
               </Link>
             </li>
-              <li>
+              <li className={`sienna-nav-item ${pathname === "/testimonials" ? "active" : ""}`}>
                 <Link
                   href='/testimonials'
-                  className={pathname === "/testimonials" ? "active-page" : ""}
+                  className={`sienna-nav-link ${pathname === "/testimonials" ? "active" : ""}`}
                 >
-                  <Icon icon='ri-star-line' className='menu-icon' />
+                  <Icon icon='ri-star-line' className='sienna-nav-icon' />
                   <span>Manage Testimonials</span>
                 </Link>
               </li>
@@ -1054,42 +1055,44 @@ const MasterLayout = ({ children }) => {
       <main
         className={sidebarActive ? "dashboard-main active" : "dashboard-main"}
       >
-        <div className='navbar-header'>
-          <div className='row align-items-center justify-content-between'>
-            <div className='col-auto'>
-              <div className='d-flex flex-wrap align-items-center gap-4'>
-                <button
-                  type='button'
-                  className='sidebar-toggle'
-                  onClick={sidebarControl}
-                >
-                  {sidebarActive ? (
-                    <Icon
-                      icon='iconoir:arrow-right'
-                      className='icon text-2xl non-active'
-                    />
-                  ) : (
-                    <Icon
-                      icon='heroicons:bars-3-solid'
-                      className='icon text-2xl non-active '
-                    />
-                  )}
-                </button>
-                <button
-                  onClick={mobileMenuControl}
-                  type='button'
-                  className='sidebar-mobile-toggle'
-                >
-                  <Icon icon='heroicons:bars-3-solid' className='icon' />
-                </button>
-                <form className='navbar-search'>
-                  <input type='text' name='search' placeholder='Search' />
-                  <Icon icon='ion:search-outline' className='icon' />
-                </form>
+        <div className='sienna-header'>
+          <div className='sienna-header-content'>
+            <div className='d-flex flex-wrap align-items-center gap-4'>
+              <button
+                type='button'
+                className='sidebar-toggle sienna-btn sienna-btn-secondary sienna-btn-sm'
+                onClick={sidebarControl}
+              >
+                {sidebarActive ? (
+                  <Icon
+                    icon='iconoir:arrow-right'
+                    className='icon text-lg'
+                  />
+                ) : (
+                  <Icon
+                    icon='heroicons:bars-3-solid'
+                    className='icon text-lg'
+                  />
+                )}
+              </button>
+              <button
+                onClick={mobileMenuControl}
+                type='button'
+                className='sidebar-mobile-toggle sienna-btn sienna-btn-secondary sienna-btn-sm'
+              >
+                <Icon icon='heroicons:bars-3-solid' className='icon' />
+              </button>
+              <div className='sienna-search-field'>
+                <input 
+                  type='text' 
+                  name='search' 
+                  placeholder='Search dashboard...' 
+                  className='sienna-search-input'
+                />
+                <Icon icon='solar:magnifer-bold-duotone' className='sienna-search-icon' />
               </div>
             </div>
-            <div className='col-auto'>
-              <div className='d-flex flex-wrap align-items-center gap-3'>
+            <div className='d-flex flex-wrap align-items-center gap-3'>
                 {/* ThemeToggleButton */}
 
                 {/*<div className='dropdown d-none d-sm-inline-block'>*/}
@@ -1638,19 +1641,28 @@ const MasterLayout = ({ children }) => {
                 {/* Notification dropdown end */}
 
                 <SignedIn>
-                  <UserButton />
+                  <div className="premium-user-profile">
+                    <UserButton 
+                      appearance={{
+                        elements: {
+                          avatarBox: {
+                            width: '40px',
+                            height: '40px',
+                          }
+                        }
+                      }}
+                    />
+                  </div>
                 </SignedIn>
                 <SignedOut>
-                  <SignInButton />
+                  <SignInButton className="sienna-btn sienna-btn-primary" />
                 </SignedOut>
-                {/* Profile dropdown end */}
               </div>
             </div>
           </div>
-        </div>
 
-        {/* dashboard-main-body */}
-        <div className='dashboard-main-body bg-sienna-img'>{children}</div>
+        {/* Premium Main Content */}
+        <div className='sienna-main-content sienna-animate-fadeIn'>{children}</div>
 
         {/* Footer section */}
         <footer className='d-footer'>

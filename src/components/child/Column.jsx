@@ -1,21 +1,21 @@
-'use client'; 
+'use client';
 import React from 'react';
 import TaskCard from './TaskCard';
 import { Droppable } from '@hello-pangea/dnd';
 import { Icon } from '@iconify/react/dist/iconify.js';
 
 const Column = ({
-    column,
-    tasks,
-    onAddTask,
-    onEditTask,
-    onDeleteTask,
-    onDuplicateTask,
-    onTrainBot,
-    isAnalyzing,
-    onAnalyzeImage,
-    isTraining
-}) => {
+                    column,
+                    tasks,
+                    onAddTask,
+                    onEditTask,
+                    onDeleteTask,
+                    onDuplicateTask,
+                    onTrainBot,
+                    isAnalyzing,
+                    onAnalyzeImage,
+                    trainingTasks // Updated prop
+                }) => {
     const isCompletedColumn = column.id === "column-2";
 
     return (
@@ -58,7 +58,7 @@ const Column = ({
                                         onTrainBot={() => onTrainBot(task.id)}
                                         isAnalyzing={isAnalyzing}
                                         onAnalyzeImage={onAnalyzeImage}
-                                        isTraining={isTraining}
+                                        isTraining={trainingTasks.get(task.id) || false} // Use per-task training state
                                     />
                                 ))}
                                 {provided.placeholder}

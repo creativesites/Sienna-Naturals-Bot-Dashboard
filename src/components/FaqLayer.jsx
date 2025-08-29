@@ -11,13 +11,13 @@ const FaqLayer = () => {
         <div className='responsive-padding-40-150 bg-light-pink'>
           <div className='row gy-4 align-items-center'>
             <div className='col-xl-7'>
-              <h4 className='mb-20'>Sienna Naturals Chatbot Documentation.</h4>
+              <h4 className='mb-20'>Myavana Chatbot Documentation.</h4>
               <p className='mb-0 text-secondary-light max-w-634-px text-xl'>
-                  This documentation provides a complete guide to the Sienna Naturals chatbot and its associated dashboard.  Find information on the bot's code, how to use the dashboard, and instructions for deployment and maintenance.
+                  This documentation provides a complete guide to the Myavana chatbot and its associated dashboard.  Find information on the bot's code, how to use the dashboard, and instructions for deployment and maintenance.
               </p>
             </div>
             <div className='col-xl-5 d-xl-block d-none'>
-              <img src='https://siennanaturals.com/cdn/shop/files/DNA_desktop_1600x.png' alt='' />
+              <img src='https://www.myavana.com/cdn/shop/files/healthy_hair_care_plan.png' alt='' />
             </div>
           </div>
         </div>
@@ -42,10 +42,10 @@ const FaqLayer1 = () => {
           <h6 className="text-xl font-semibold mb-4">Bot Code Documentation</h6>
           <p>Detailed explanation of the bot's codebase, including:</p>
             <div>
-                <h6>Sienna Naturals Chatbot Documentation</h6>
+                <h6>Myavana Chatbot Documentation</h6>
 
                 <p>
-                    This document provides comprehensive documentation for the Sienna Naturals chatbot, a virtual assistant designed to
+                    This document provides comprehensive documentation for the Myavana chatbot, a virtual assistant designed to
                     provide customer support, product information, and personalized haircare advice. The chatbot integrates with
                     Google's Gemini AI models, PostgreSQL for data storage, and Redis for caching.
                 </p>
@@ -66,9 +66,9 @@ const FaqLayer1 = () => {
 
                 <h6 id="overview">1. Overview</h6>
                 <p>
-                    The Sienna Naturals chatbot is a Node.js application built to handle user interactions, leveraging AI for
+                    The Myavana chatbot is a Node.js application built to handle user interactions, leveraging AI for
                     natural language understanding and generation. It provides a seamless conversational experience for users seeking
-                    information about Sienna Naturals products, haircare advice, and account-related inquiries. The chatbot supports
+                    information about Myavana products, haircare advice, and account-related inquiries. The chatbot supports
                     text-based interactions and image uploads for personalized hair analysis.
                 </p>
 
@@ -556,7 +556,7 @@ const FaqLayer1 = () => {
           <div>
               <h3 className="text-xl font-semibold mb-4">Dashboard Documentation</h3>
               <p>
-                  This section provides a comprehensive guide to using the Sienna Naturals
+                  This section provides a comprehensive guide to using the Myavana
                   chatbot dashboard.  Learn how to navigate the interface, interpret the
                   data, and manage users and conversations.
               </p>
@@ -726,7 +726,7 @@ const FaqLayer1 = () => {
               <ol className="list-decimal list-inside ml-4">
                   <li>Go to the <a href="https://clerk.com/" target="_blank" rel="noopener noreferrer" className="text-blue-500 hover:underline">Clerk website</a>.</li>
                   <li>Click "Sign Up" and create an account.</li>
-                  <li>Create a new application in the Clerk dashboard.  Give it a descriptive name (e.g., "Sienna Naturals Dashboard").</li>
+                  <li>Create a new application in the Clerk dashboard.  Give it a descriptive name (e.g., "Myavana Dashboard").</li>
                   <li>Configure the application:
                       <ul className="list-disc list-inside ml-8">
                           <li>Select the desired authentication methods (e.g., Email and Password, Google, etc.).  For a dashboard, email/password is usually sufficient.</li>
@@ -1027,7 +1027,7 @@ const constructPrompt = async (userId, userDetails, chatHistory, allConversation
 
 const postProcessingPrompt = (chatHistory, message) => {
                         return '
-    You are a Sienna Naturals expert AI assistant designed to analyze user conversations and user's name and extract structured information related to hair care.
+    You are a Myavana expert AI assistant designed to analyze user conversations and user's name and extract structured information related to hair care.
 
     // ... (rest of the prompt) ...
     ';

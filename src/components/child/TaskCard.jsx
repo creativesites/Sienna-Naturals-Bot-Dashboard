@@ -48,7 +48,7 @@ const TaskCard = ({ task, index, onEdit, onDelete, onDuplicate, onTrainBot, isAn
                                 }
                                 className="text-capitalize"
                             >
-                                {task.trainingStatus}
+                                {task.trainingStatus??"pending"}
                             </Badge>
                         )}
                     </div>
@@ -164,7 +164,8 @@ const TaskCard = ({ task, index, onEdit, onDelete, onDuplicate, onTrainBot, isAn
                                 </button>
                             )}
 
-                            {task.description && !task.descriptionLoading && (
+
+                            {task.description && !task.descriptionLoading && task.trainingStatus !== 'completed' &&  (
                                 <>
                                     {isTraining && task.trainingStatus === "pending" ?(
                                         <div className="🤚">

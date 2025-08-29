@@ -20,7 +20,7 @@ const initialData = {
     },
   },
   tasks: [],
-  columnOrder: ["column-1",  "column-2"],
+  columnOrder: ["column-1", "column-2"],
 };
 
 const KanbanBoard = () => {
@@ -32,15 +32,15 @@ const KanbanBoard = () => {
   const [loadingProducts, setLoadingProducts] = useState(true);
   const [products, setProducts] = useState([]);
   const [loadingTasks, setLoadingTasks] = useState(true);
-  const [isTraining, setIsTraining] = useState(false);
+  const [trainingTasks, setTrainingTasks] = useState(new Map()); // Track training state per task
 
+  // Load initial data from API
   useEffect(() => {
     const loadInitialData = async () => {
       try {
         setLoadingTasks(true);
         setLoadingProducts(true);
 
-        // Load products and tasks in parallel
         const [productsResponse, tasksResponse] = await Promise.all([
           fetch('/api/products'),
           fetch('/api/training-images')
@@ -53,15 +53,12 @@ const KanbanBoard = () => {
         const productsData = await productsResponse.json();
         const tasksData = await tasksResponse.json();
 
-        console.log('products:', productsData.products)
         setProducts(productsData.products);
 
-        // Transform database tasks into our kanban format
         const tasks = tasksData.tasks.map(task => {
-          // Find associated product if exists
           const associatedProduct = task.productId
-            ? productsData.products.find(p => p.product_id == task.productId)
-            : null;
+              ? productsData.products.find(p => p.product_id == task.productId)
+              : null;
 
           return {
             id: task.taskId,
@@ -75,21 +72,19 @@ const KanbanBoard = () => {
             date: new Date(task.createdAt).toISOString().split('T')[0]
           };
         });
-        console.log('tasks', tasks)
 
-        // Organize tasks into columns
         const newColumn1 = {
           ...initialData.columns['column-1'],
           taskIds: tasks
-            .filter(task => task.trainingStatus !== 'completed')
-            .map(task => task.id)
+              .filter(task => task.trainingStatus !== 'completed')
+              .map(task => task.id)
         };
 
         const newColumn2 = {
           ...initialData.columns['column-2'],
           taskIds: tasks
-            .filter(task => task.trainingStatus === 'completed')
-            .map(task => task.id)
+              .filter(task => task.trainingStatus === 'completed')
+              .map(task => task.id)
         };
 
         setData({
@@ -100,7 +95,6 @@ const KanbanBoard = () => {
           tasks,
           columnOrder: ['column-1', 'column-2']
         });
-
       } catch (error) {
         console.error("Error loading initial data:", error);
         toast.error("Failed to load initial data");
@@ -113,14 +107,15 @@ const KanbanBoard = () => {
     loadInitialData();
   }, []);
 
-  const onDragEnd = (result) => {
+  // Handle drag-and-drop events
+  const onDragEnd = async (result) => {
     const { destination, source, draggableId } = result;
 
     if (!destination) return;
 
     if (
-      destination.droppableId === source.droppableId &&
-      destination.index === source.index
+        destination.droppableId === source.droppableId &&
+        destination.index === source.index
     ) {
       return;
     }
@@ -162,11 +157,12 @@ const KanbanBoard = () => {
       taskIds: endTaskIds,
     };
 
+    const newTrainingStatus = destination.droppableId === "column-2" ? "completed" : "not_started";
     const updatedTasks = data.tasks.map(task => {
       if (task.id === draggableId) {
         return {
           ...task,
-          trainingStatus: destination.droppableId === "column-2" ? "completed" : "not_started"
+          trainingStatus: newTrainingStatus
         };
       }
       return task;
@@ -181,6 +177,20 @@ const KanbanBoard = () => {
       },
       tasks: updatedTasks,
     });
+
+    // Persist status change to database
+    try {
+      const task = updatedTasks.find(t => t.id === draggableId);
+      await updateTaskInDatabase({
+        ...task,
+        trainingStatus: newTrainingStatus
+      });
+    } catch (error) {
+      console.error("Error updating task status in database:", error);
+      toast.error("Failed to update task status");
+      // Revert state on failure
+      setData({ ...data });
+    }
   };
 
   const handleAddTask = (columnId) => {
@@ -200,7 +210,6 @@ const KanbanBoard = () => {
 
   const handleDeleteTask = async (taskId, columnId) => {
     try {
-      // Delete from database first
       const response = await fetch(`/api/training-images/${taskId}`, {
         method: 'DELETE'
       });
@@ -209,7 +218,6 @@ const KanbanBoard = () => {
         throw new Error('Failed to delete task from database');
       }
 
-      // Then update local state
       const column = data.columns[columnId];
       const newTaskIds = column.taskIds.filter((id) => id !== taskId);
       const newColumn = {
@@ -269,12 +277,10 @@ const KanbanBoard = () => {
       const formData = new FormData();
       formData.append("file", file);
 
-      // Upload to your API endpoint
       const response = await fetch('/api/upload', {
         method: 'POST',
-        body: formData,  // Use formData instead of JSON body
+        body: formData,
       });
-
 
       if (!response.ok) {
         throw new Error('Upload failed');
@@ -291,14 +297,12 @@ const KanbanBoard = () => {
   const analyzeImage = async (imageFile, taskId, associatedProduct, title, tag) => {
     setIsAnalyzing(true);
     try {
-      // Get a URL for the image (or use existing if already saved)
       const imageUrl = imageFile ? await uploadImageAndGetUrl(imageFile) : data.tasks.find(t => t.id === taskId)?.image;
 
       if (!imageUrl) {
         throw new Error("No image available for analysis");
       }
 
-      // Analyze with GenKit
       const response = await fetch('/api/analyze-image', {
         method: 'POST',
         body: JSON.stringify({
@@ -316,12 +320,10 @@ const KanbanBoard = () => {
 
       const { productName, description, trainingPairs } = await response.json();
 
-      // Convert trainingPairs to trainingData format if needed
       const trainingData = trainingPairs
-        ? JSON.stringify(trainingPairs, null, 2)
-        : null;
+          ? JSON.stringify(trainingPairs, null, 2)
+          : null;
 
-      // Update local state
       setData(prev => ({
         ...prev,
         tasks: prev.tasks.map(task => {
@@ -330,14 +332,13 @@ const KanbanBoard = () => {
               ...task,
               description: description || task.description,
               trainingData,
-              descriptionLoading: false // Set loading to false on success
+              descriptionLoading: false
             };
           }
           return task;
         })
       }));
 
-      // Update database
       const task = data.tasks.find(t => t.id === taskId);
       await updateTaskInDatabase({
         id: taskId,
@@ -352,21 +353,21 @@ const KanbanBoard = () => {
       toast.success("Image analysis completed");
     } catch (error) {
       console.error("Image analysis failed:", error);
-//      toast.error("Failed to analyze image");
+      toast.error("Failed to analyze image");
 
-//      setData(prev => ({
-//        ...prev,
-//        tasks: prev.tasks.map(task => {
-//          if (task.id === taskId) {
-//            return {
-//              ...task,
-//              description: "Could not analyze image",
-//              descriptionLoading: false // Ensure loading is false on error
-//            };
-//          }
-//          return task;
-//        })
-//      }));
+      setData(prev => ({
+        ...prev,
+        tasks: prev.tasks.map(task => {
+          if (task.id === taskId) {
+            return {
+              ...task,
+              description: "Could not analyze image",
+              descriptionLoading: false
+            };
+          }
+          return task;
+        })
+      }));
     } finally {
       setIsAnalyzing(false);
     }
@@ -387,9 +388,10 @@ const KanbanBoard = () => {
     }, null, 2);
   };
 
+  // Handle bot training for a task
   const handleTrainBot = async (taskId) => {
     try {
-      setIsTraining(true);
+      setTrainingTasks(prev => new Map(prev).set(taskId, true));
 
       // Update local state to "pending"
       setData(prev => ({
@@ -405,68 +407,85 @@ const KanbanBoard = () => {
         })
       }));
 
-      // Update database status to "pending"
+      // Update database to "pending"
+      const task = data.tasks.find(t => t.id === taskId);
+      // Update database to "completed"
       await updateTaskInDatabase({
-        id: taskId,
-        trainingStatus: "completed",
-        ...data.tasks.find(t => t.id === taskId)
+        ...task,
+        trainingStatus: "completed"
       });
 
       toast.info("Bot training started for this content");
 
-      // Simulate training with timeout (3 seconds)
-      setTimeout(async () => {
-        try {
-          // Update local state to "completed"
-          setData(prev => {
-            const updatedTasks = prev.tasks.map(task => {
-              if (task.id === taskId) {
-                return {
-                  ...task,
-                  trainingStatus: "completed"
-                };
-              }
-              return task;
-            });
+      // Simulate training
 
-            // Move task to completed column
-            return {
-              ...prev,
-              tasks: updatedTasks,
-              columns: {
-                ...prev.columns,
-                "column-1": {
-                  ...prev.columns["column-1"],
-                  taskIds: prev.columns["column-1"].taskIds.filter(id => id !== taskId)
-                },
-                "column-2": {
-                  ...prev.columns["column-2"],
-                  taskIds: [taskId, ...prev.columns["column-2"].taskIds]
-                }
-              }
-            };
+      await new Promise(resolve => setTimeout(resolve, 3000));
+
+      try {
+        // Update local state to "completed"
+        setData(prev => {
+          const updatedTasks = prev.tasks.map(task => {
+            if (task.id === taskId) {
+              return {
+                ...task,
+                trainingStatus: "completed"
+              };
+            }
+            return task;
           });
 
-          // Update database status to "completed"
-//          await updateTaskInDatabase({
-//            id: taskId,
-//            trainingStatus: "completed",
-//            ...data.tasks.find(t => t.id === taskId)
-//          });
+          return {
+            ...prev,
+            tasks: updatedTasks,
+            columns: {
+              ...prev.columns,
+              "column-1": {
+                ...prev.columns["column-1"],
+                taskIds: prev.columns["column-1"].taskIds.filter(id => id !== taskId)
+              },
+              "column-2": {
+                ...prev.columns["column-2"],
+                taskIds: [taskId, ...prev.columns["column-2"].taskIds]
+              }
+            }
+          };
+        });
 
-          toast.success("Bot training completed!");
-        } catch (error) {
-          console.error("Error completing training:", error);
-          toast.error("Failed to complete training");
-        } finally {
-          setIsTraining(false);
-        }
-      }, 3000); // 3 second training simulation
 
+        toast.success("Bot training completed!");
+      } catch (error) {
+        console.error("Error completing training:", error);
+        toast.error("Failed to complete training");
+
+        // Revert to "not_started" on failure
+        setData(prev => ({
+          ...prev,
+          tasks: prev.tasks.map(t => {
+            if (t.id === taskId) {
+              return { ...t, trainingStatus: "not_started" };
+            }
+            return t;
+          })
+        }));
+        await updateTaskInDatabase({
+          ...task,
+          trainingStatus: "not_started"
+        });
+      } finally {
+        setTrainingTasks(prev => {
+          const newMap = new Map(prev);
+          newMap.delete(taskId);
+          return newMap;
+        });
+      }
     } catch (error) {
       console.error("Error starting training:", error);
       toast.error("Failed to start training");
-      setIsTraining(false);
+      setTrainingTasks(prev => {
+        const newMap = new Map(prev);
+        newMap.delete(taskId);
+        return newMap;
+      });
     }
   };
 
@@ -474,12 +493,10 @@ const KanbanBoard = () => {
     try {
       let imageUrl = task.image;
 
-      // Upload new image if changed
       if (task.imageFile) {
         imageUrl = await uploadImageAndGetUrl(task.imageFile);
       }
 
-      // Prepare complete task data
       const taskData = {
         ...task,
         image: imageUrl,
@@ -487,16 +504,14 @@ const KanbanBoard = () => {
       };
 
       if (isEdit && currentTask) {
-        // Update in database
         await updateTaskInDatabase({
           ...taskData,
           id: task.id,
           associatedProduct: task.associatedProduct
         });
 
-        // Then update local state
         const updatedTasks = data.tasks.map(t =>
-          t.id === task.id ? { ...t, ...taskData } : t
+            t.id === task.id ? { ...t, ...taskData } : t
         );
 
         setData({
@@ -504,12 +519,10 @@ const KanbanBoard = () => {
           tasks: updatedTasks,
         });
 
-        // Analyze if image was changed
         if (task.imageFile) {
           await analyzeImage(task.imageFile, task.id, task.associatedProduct, task.title, task.tag);
         }
       } else {
-        // Create new task
         const newId = uuidv4();
         const newTask = {
           ...taskData,
@@ -517,13 +530,11 @@ const KanbanBoard = () => {
           descriptionLoading: !!task.imageFile
         };
 
-        // Save to database
         await saveTaskToDatabase({
           ...newTask,
           associatedProduct: task.associatedProduct
         });
 
-        // Then update local state
         const newTasks = [...data.tasks, newTask];
         const column = currentColumn ? data.columns[currentColumn] : data.columns["column-1"];
         const newTaskIds = Array.from(column.taskIds);
@@ -542,7 +553,6 @@ const KanbanBoard = () => {
           tasks: newTasks,
         });
 
-        // Analyze if image was provided
         if (task.imageFile) {
           await analyzeImage(task.imageFile, newId, task.associatedProduct, task.title, task.tag);
         }
@@ -556,40 +566,10 @@ const KanbanBoard = () => {
 
       if (isEdit && currentTask) {
         const updatedTasks = data.tasks.map(t =>
-          t.id === task.id ? { ...t, trainingStatus: "failed" } : t
+            t.id === task.id ? { ...t, trainingStatus: "failed" } : t
         );
         setData({ ...data, tasks: updatedTasks });
       }
-    }
-  };
-
-  const saveImageToDatabase = async (task) => {
-    try {
-      const response = await fetch('/api/save-training-image', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          task_id: task.id,
-          title: task.title,
-          description: task.description,
-          tag: task.tag,
-          image_url: task.image,
-          product_id: task.associatedProduct?.product_id || null,
-          training_data: task.trainingData || null
-        }),
-      });
-
-      if (!response.ok) {
-        const errorData = await response.json();
-        throw new Error(errorData.error || 'Failed to save image to database');
-      }
-
-      return await response.json();
-    } catch (error) {
-      console.error('Database save error:', error);
-      throw error;
     }
   };
 
@@ -624,37 +604,8 @@ const KanbanBoard = () => {
     }
   };
 
-  const updateTaskInDatabase1 = async (task) => {
-    try {
-      const response = await fetch(`/api/training-images/${task.id}`, {
-        method: 'PUT',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          title: task.title,
-          description: task.description,
-          tag: task.tag,
-          image_url: task.image,
-          product_id: task.associatedProduct?.product_id || null,
-          training_data: task.trainingData || null,
-          training_status: task.trainingStatus || 'not_started'
-        }),
-      });
-
-      if (!response.ok) {
-        const errorData = await response.json();
-        throw new Error(errorData.error || 'Failed to update task in database');
-      }
-
-      return await response.json();
-    } catch (error) {
-      console.error('Database update error:', error);
-      throw error;
-    }
-  };
-
   const updateTaskInDatabase = async (task) => {
+    console.log('update_task_in_data', task);
     try {
       const response = await fetch(`/api/training-images/${task.id}`, {
         method: 'PUT',
@@ -668,7 +619,7 @@ const KanbanBoard = () => {
           image_url: task.image,
           product_id: task.associatedProduct?.product_id || null,
           training_data: task.trainingData || null,
-          training_status: task.trainingStatus || 'not_started'
+          trainingStatus: task.trainingStatus || 'not_started'
         }),
       });
 
@@ -685,7 +636,6 @@ const KanbanBoard = () => {
   };
 
   const handleAnalyzeImage = (taskId) => {
-    // Update local state to show loading
     setData(prev => ({
       ...prev,
       tasks: prev.tasks.map(task => {
@@ -706,45 +656,45 @@ const KanbanBoard = () => {
   };
 
   return (
-    <div className="kanban-wrapper p-4">
-      <DragDropContext onDragEnd={onDragEnd}>
-        <div className="d-flex align-items-start gap-4" style={{ overflowX: "auto" }}>
-          {data.columnOrder.map((columnId) => {
-            const column = data.columns[columnId];
-            const tasks = column.taskIds
-              .map(taskId => data.tasks.find(task => task.id === taskId))
-              .filter(Boolean);
+      <div className="kanban-wrapper p-4">
+        <DragDropContext onDragEnd={onDragEnd}>
+          <div className="d-flex align-items-start gap-4" style={{ overflowX: "auto" }}>
+            {data.columnOrder.map((columnId) => {
+              const column = data.columns[columnId];
+              const tasks = column.taskIds
+                  .map(taskId => data.tasks.find(task => task.id === taskId))
+                  .filter(Boolean);
 
-            return (
-              <Column
-                key={column.id}
-                column={column}
-                tasks={tasks}
-                onAddTask={handleAddTask}
-                onEditTask={handleEditTask}
-                onDeleteTask={handleDeleteTask}
-                onDuplicateTask={handleDuplicateTask}
-                onTrainBot={handleTrainBot}
-                isAnalyzing={isAnalyzing}
-                onAnalyzeImage={handleAnalyzeImage}
-                isTraining={isTraining}
-              />
-            );
-          })}
-        </div>
-      </DragDropContext>
+              return (
+                  <Column
+                      key={column.id}
+                      column={column}
+                      tasks={tasks}
+                      onAddTask={handleAddTask}
+                      onEditTask={handleEditTask}
+                      onDeleteTask={handleDeleteTask}
+                      onDuplicateTask={handleDuplicateTask}
+                      onTrainBot={handleTrainBot}
+                      isAnalyzing={isAnalyzing}
+                      onAnalyzeImage={handleAnalyzeImage}
+                      trainingTasks={trainingTasks} // Pass per-task training state
+                  />
+              );
+            })}
+          </div>
+        </DragDropContext>
 
-      <AddEditTaskModal
-        show={showModal}
-        handleClose={() => setShowModal(false)}
-        handleSave={handleSaveTask}
-        task={currentTask}
-        setCurrentTask={setCurrentTask}
-        isAnalyzing={isAnalyzing}
-        products={products}
-        loadingProducts={loadingProducts}
-      />
-    </div>
+        <AddEditTaskModal
+            show={showModal}
+            handleClose={() => setShowModal(false)}
+            handleSave={handleSaveTask}
+            task={currentTask}
+            setCurrentTask={setCurrentTask}
+            isAnalyzing={isAnalyzing}
+            products={products}
+            loadingProducts={loadingProducts}
+        />
+      </div>
   );
 };
 

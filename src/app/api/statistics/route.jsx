@@ -15,8 +15,8 @@ export async function GET() {
         const activeUsers = parseInt(activeUsersQuery.rows[0].count, 10);
 
         // Total Product Interactions
-        const productInteractionsQuery = await pgClient.query('SELECT COUNT(*) FROM product_interactions');
-        const productInteractions = parseInt(productInteractionsQuery.rows[0].count, 10);
+        // const productInteractionsQuery = await pgClient.query('SELECT COUNT(*) FROM product_interactions');
+        // const productInteractions = parseInt(productInteractionsQuery.rows[0].count, 10);
 
         // Total Hair Profiles Analyzed
         const hairProfilesQuery = await pgClient.query('SELECT COUNT(*) FROM user_hair_profiles');
@@ -40,19 +40,19 @@ export async function GET() {
 
 
         // Top Products Clicked (from product_interactions) -- Keep this
-        const topProductsQuery = await pgClient.query(
-            'SELECT product_name, COUNT(*) as clicks FROM product_interactions GROUP BY product_name ORDER BY clicks DESC LIMIT 5'
-        );
-        const topProducts = topProductsQuery.rows;
+        // const topProductsQuery = await pgClient.query(
+        //     'SELECT product_name, COUNT(*) as clicks FROM product_interactions GROUP BY product_name ORDER BY clicks DESC LIMIT 5'
+        // );
+        // const topProducts = topProductsQuery.rows;
 
         return NextResponse.json({
             totalConversations,
             activeUsers,
-            productInteractions,
+            // productInteractions,
             hairProfiles,
             totalHairIssues, // Add totalHairIssues to the response
             commonConcerns, // Keep this if you use it somewhere else
-            topProducts,    // Keep this
+            // topProducts,    // Keep this
         });
 
     } catch (error) {

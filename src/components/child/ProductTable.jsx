@@ -99,7 +99,7 @@ const ProductTable = () => {
                         onChange={(e) => {
                             setProductsPerPage(Number(e.target.value));
                             setCurrentPage(1);
-                        }}
+                        }} 
                     >
                         <option value='10'>10</option>
                         <option value='25'>25</option>
@@ -118,7 +118,7 @@ const ProductTable = () => {
                         <Icon icon='ion:search-outline' className='icon' />
                     </form>
                 </div>
-                <Link href="/products/create">
+                {/* <Link href="/products/create">
                     
                     <button
                         type='button'
@@ -126,19 +126,19 @@ const ProductTable = () => {
                     >
                         <i className='ri-edit-2-fill' /> Add New Product
                     </button>
-                </Link>
+                </Link> */}
             </div>
             <div className='card-body p-24'>
                 <div className='table-responsive scroll-sm'>
                     <table className='table bordered-table sm-table mb-0'>
                         <thead>
                         <tr>
-                            <th scope='col'>S.L</th>
-                            <th scope='col'>Image</th>
-                            <th scope='col'>Name</th>
-                            <th scope='col'>Description</th>
-                            <th scope='col'>Price</th>
-                            <th scope='col'>URL</th>
+                        <th scope='col'>S.L</th>
+                                <th scope='col'>Image</th>
+                                <th scope='col'>Name</th>
+                                <th scope='col'>Description</th>
+                                <th scope='col'>Cost</th>
+                                <th scope='col'>URL</th> {/*url column is now details*/}
                             <th scope='col' className='text-center'>
                                 Action
                             </th>
@@ -149,9 +149,9 @@ const ProductTable = () => {
                             <tr key={product.product_id}>
                                 <td>{(currentPage - 1) * productsPerPage + index + 1}</td>
                                 <td><img src={product.image??'https://static.vecteezy.com/system/resources/thumbnails/030/607/510/small/cosmetic-rounded-all-white-soap-bottle-mockup-on-white-table-ai-generative-free-photo.jpg'} alt={product.name} width="50" /></td>
-                                <td>{product.name}</td>
-                                <td>{stripHtml(product.desc.substring(0,30)).result}</td>
-                                <td>{product.price}</td>
+                                <td>{product.name?.substring(0,24)}</td>
+                                <td>{stripHtml(product.general_description?.substring(0,30)).result}</td>
+                                <td>{product.cost?.substring(0,8)}</td>
                                 <td><a href={product.url} target="_blank" rel="noopener noreferrer">Link</a></td>
                                 <td className='text-center'>
                                     <div className='d-flex align-items-center gap-10 justify-content-center'>
@@ -159,7 +159,7 @@ const ProductTable = () => {
                                             <button
                                                 type='button'
                                                 className='bg-info-focus bg-hover-info-200 text-info-600 fw-medium w-40-px h-40-px d-flex justify-content-center align-items-center rounded-circle'
-                                                onClick={() => handleEditProduct(product.product_id)}
+                                                
                                             >
 
                                                 <Icon icon='majesticons:eye-line' className='icon text-xl' />

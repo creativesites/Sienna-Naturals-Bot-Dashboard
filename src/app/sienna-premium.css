@@ -1,0 +1,1558 @@
+/* ================================
+   SIENNA NATURALS PREMIUM DESIGN SYSTEM
+   ================================ */
+
+/* Premium Color Palette - Sienna Naturals Brand */
+:root {
+  /* Primary Brand Colors - Enhanced for Sienna Naturals Natural Beauty */
+  --sienna-sage: #91A996;         /* Soft sage-green - Primary brand color */
+  --sienna-charcoal: #131A19;     /* Deep, near-black for labels/text - Updated for better contrast */
+  --sienna-charcoal-light: #2a2626;
+  --sienna-charcoal-dark: #1a1717;
+  --sienna-terra: #817F7E;        /* Earthy accent color */
+  --sienna-white: #FFFFFF;        /* Clean white for backgrounds */
+  
+  /* Premium Neutrals */
+  --sienna-pearl: #f8f6f4;
+  --sienna-cream: #f5f3f0;
+  --sienna-ash: #8b8580;
+  --sienna-smoke: #6b6560;
+  --sienna-slate: #4a453f;
+  
+  /* Accent Colors - Updated with Sienna Naturals Brand Palette */
+  --sienna-copper: #b8860b;
+  --sienna-copper-light: #daa520;
+  --sienna-copper-soft: #f4e4bc;
+  --sienna-beige: #f5f3f0;        /* Muted beige tone */
+  --sienna-brown: #8b7355;        /* Muted brown accent */
+  
+  /* Success & Status */
+  --sienna-emerald: #2d5a27;
+  --sienna-emerald-light: #4a7c59;
+  --sienna-ruby: #8b2635;
+  --sienna-ruby-light: #c44569;
+  --sienna-amber: #d4a574;
+  --sienna-amber-light: #e6c4a0;
+  
+  /* Gradients */
+  --sienna-gradient-primary: linear-gradient(135deg, var(--sienna-charcoal) 0%, var(--sienna-charcoal-light) 100%);
+  --sienna-gradient-copper: linear-gradient(135deg, var(--sienna-copper) 0%, var(--sienna-copper-light) 100%);
+  --sienna-gradient-pearl: linear-gradient(135deg, var(--sienna-pearl) 0%, var(--sienna-cream) 100%);
+  
+  /* Shadows & Effects */
+  --sienna-shadow-soft: 0 2px 8px rgba(34, 31, 31, 0.08);
+  --sienna-shadow-medium: 0 4px 20px rgba(34, 31, 31, 0.12);
+  --sienna-shadow-strong: 0 8px 32px rgba(34, 31, 31, 0.16);
+  --sienna-shadow-luxury: 0 12px 48px rgba(34, 31, 31, 0.20);
+  
+  /* Typography */
+  --sienna-font-primary: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif;
+  --sienna-font-display: 'Playfair Display', serif;
+  --sienna-font-mono: 'JetBrains Mono', 'Fira Code', monospace;
+  
+  /* Spacing Scale */
+  --sienna-space-xs: 0.25rem;
+  --sienna-space-sm: 0.5rem;
+  --sienna-space-md: 1rem;
+  --sienna-space-lg: 1.5rem;
+  --sienna-space-xl: 2rem;
+  --sienna-space-2xl: 3rem;
+  --sienna-space-3xl: 4rem;
+  
+  /* Border Radius */
+  --sienna-radius-sm: 6px;
+  --sienna-radius-md: 12px;
+  --sienna-radius-lg: 16px;
+  --sienna-radius-xl: 24px;
+  
+  /* Transitions */
+  --sienna-transition-fast: 0.15s ease-out;
+  --sienna-transition-medium: 0.25s ease-out;
+  --sienna-transition-slow: 0.4s ease-out;
+}
+
+/* ================================
+   PREMIUM BASE STYLES
+   ================================ */
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: var(--sienna-font-primary);
+  background: var(--sienna-gradient-pearl);
+  color: var(--sienna-charcoal);
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  letter-spacing: -0.01em;
+}
+
+/* ================================
+   PREMIUM LAYOUT COMPONENTS
+   ================================ */
+
+/* Main Layout Container */
+.sienna-main-layout {
+  min-height: 100vh;
+  background: var(--sienna-gradient-pearl);
+}
+
+/* Sidebar Premium Styling - Modern Light Design */
+.sienna-sidebar {
+  background: rgba(255, 255, 255, 0.98);
+  backdrop-filter: blur(20px);
+  border-right: 1px solid var(--sienna-ash);
+  box-shadow: var(--sienna-shadow-medium);
+}
+
+.sienna-sidebar-brand {
+  padding: var(--sienna-space-xl);
+  border-bottom: 1px solid rgba(139, 133, 128, 0.15);
+}
+
+.sienna-sidebar-nav {
+  padding: var(--sienna-space-lg);
+}
+
+.sienna-nav-item {
+  margin-bottom: var(--sienna-space-sm);
+  border-radius: var(--sienna-radius-md);
+  transition: all var(--sienna-transition-medium);
+  position: relative;
+  overflow: hidden;
+}
+
+.sienna-nav-item::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(135deg, rgba(184, 134, 11, 0.1) 0%, rgba(212, 165, 116, 0.1) 100%);
+  transition: left var(--sienna-transition-medium);
+  z-index: 0;
+}
+
+.sienna-nav-item:hover::before,
+.sienna-nav-item.active::before {
+  left: 0;
+}
+
+.sienna-nav-link {
+  display: flex;
+  align-items: center;
+  padding: var(--sienna-space-md) var(--sienna-space-lg);
+  color: var(--sienna-slate);
+  text-decoration: none;
+  font-weight: 500;
+  border-radius: var(--sienna-radius-md);
+  transition: all var(--sienna-transition-medium);
+  position: relative;
+  z-index: 1;
+}
+
+.sienna-nav-link:hover,
+.sienna-nav-link.active {
+  color: var(--sienna-charcoal);
+  background: rgba(184, 134, 11, 0.08);
+  transform: translateX(4px);
+}
+
+.sienna-nav-icon {
+  margin-right: var(--sienna-space-md);
+  font-size: 1.1rem;
+}
+
+/* Header Premium Styling */
+.sienna-header {
+  background: rgba(255, 255, 255, 0.9);
+  backdrop-filter: blur(20px);
+  border-bottom: 1px solid rgba(34, 31, 31, 0.06);
+  box-shadow: var(--sienna-shadow-soft);
+  padding: var(--sienna-space-md) var(--sienna-space-xl);
+}
+
+.sienna-header-content {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+/* Main Content Area */
+.sienna-main-content {
+  padding: var(--sienna-space-xl);
+  min-height: calc(100vh - 80px);
+}
+
+/* ================================
+   PREMIUM CARDS & PANELS
+   ================================ */
+
+/* Sienna Naturals Clean Card Design */
+.sienna-card {
+  background-color: var(--sienna-white);
+  border: 1px solid var(--sienna-sage);
+  border-radius: 8px;
+  padding: 1.25rem;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+  transition: all var(--sienna-transition-medium);
+  overflow: hidden;
+}
+
+.sienna-card:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--sienna-shadow-luxury);
+}
+
+.sienna-card-header {
+  padding: var(--sienna-space-xl);
+  border-bottom: 1px solid rgba(34, 31, 31, 0.06);
+  background: var(--sienna-gradient-pearl);
+}
+
+.sienna-card-body {
+  padding: var(--sienna-space-xl);
+}
+
+.sienna-card-title {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--sienna-charcoal);
+  margin: 0;
+  letter-spacing: -0.02em;
+}
+
+.sienna-card-subtitle {
+  color: var(--sienna-ash);
+  margin-top: var(--sienna-space-sm);
+  font-weight: 500;
+}
+
+/* Premium Stat Cards */
+.sienna-stat-card {
+  background: var(--sienna-gradient-primary);
+  color: white;
+  border: none;
+  position: relative;
+  overflow: hidden;
+}
+
+.sienna-stat-card::before {
+  content: '';
+  position: absolute;
+  top: -50%;
+  right: -50%;
+  width: 100%;
+  height: 200%;
+  background: var(--sienna-gradient-copper);
+  opacity: 0;
+  transform: rotate(45deg);
+  transition: opacity var(--sienna-transition-medium);
+}
+
+.sienna-stat-card:hover::before {
+  opacity: 0.1;
+}
+
+.sienna-stat-value {
+  font-size: 2.5rem;
+  font-weight: 800;
+  margin: 0;
+  position: relative;
+  z-index: 1;
+}
+
+.sienna-stat-label {
+  color: rgba(255, 255, 255, 0.8);
+  font-weight: 500;
+  margin-top: var(--sienna-space-sm);
+  position: relative;
+  z-index: 1;
+}
+
+.sienna-stat-icon {
+  position: absolute;
+  top: var(--sienna-space-lg);
+  right: var(--sienna-space-lg);
+  font-size: 2rem;
+  opacity: 0.3;
+  z-index: 1;
+}
+
+/* ================================
+   PREMIUM FORM CONTROLS
+   ================================ */
+
+.sienna-form-group {
+  margin-bottom: var(--sienna-space-lg);
+}
+
+.sienna-form-label {
+  display: block;
+  margin-bottom: var(--sienna-space-sm);
+  font-weight: 600;
+  color: var(--sienna-charcoal);
+  font-size: 0.9rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.sienna-form-control {
+  width: 100%;
+  padding: var(--sienna-space-md) var(--sienna-space-lg);
+  border: 2px solid rgba(34, 31, 31, 0.1);
+  border-radius: var(--sienna-radius-md);
+  background: rgba(255, 255, 255, 0.9);
+  backdrop-filter: blur(10px);
+  font-family: var(--sienna-font-primary);
+  font-size: 1rem;
+  color: var(--sienna-charcoal);
+  transition: all var(--sienna-transition-medium);
+}
+
+.sienna-form-control:focus {
+  outline: none;
+  border-color: var(--sienna-copper);
+  box-shadow: 0 0 0 4px rgba(184, 134, 11, 0.1);
+  transform: translateY(-1px);
+}
+
+.sienna-form-control::placeholder {
+  color: var(--sienna-ash);
+}
+
+/* Premium Search Field */
+.sienna-search-field {
+  position: relative;
+}
+
+.sienna-search-input {
+  padding-left: 3rem;
+  background: rgba(255, 255, 255, 0.95);
+  border: 2px solid rgba(34, 31, 31, 0.08);
+  border-radius: var(--sienna-radius-xl);
+  transition: all var(--sienna-transition-medium);
+}
+
+.sienna-search-input:focus {
+  border-color: var(--sienna-copper);
+  box-shadow: 0 0 0 4px rgba(184, 134, 11, 0.1);
+}
+
+.sienna-search-icon {
+  position: absolute;
+  left: var(--sienna-space-lg);
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--sienna-ash);
+  font-size: 1.1rem;
+}
+
+/* ================================
+   PREMIUM BUTTONS
+   ================================ */
+
+.sienna-btn {
+  display: inline-flex;
+  align-items: center;
+  padding: var(--sienna-space-md) var(--sienna-space-xl);
+  border: none;
+  border-radius: var(--sienna-radius-md);
+  font-family: var(--sienna-font-primary);
+  font-weight: 600;
+  font-size: 0.95rem;
+  text-decoration: none;
+  text-align: center;
+  cursor: pointer;
+  transition: all var(--sienna-transition-medium);
+  position: relative;
+  overflow: hidden;
+  letter-spacing: 0.02em;
+}
+
+.sienna-btn::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+  transition: left var(--sienna-transition-slow);
+}
+
+.sienna-btn:hover::before {
+  left: 100%;
+}
+
+/* Primary Button - Sienna Naturals Sage Green Theme */
+.sienna-btn-primary {
+  background-color: var(--sienna-sage);
+  color: var(--sienna-white);
+  border: none;
+  padding: 0.75em 1.5em;
+  border-radius: 4px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background-color 200ms ease-in-out;
+  box-shadow: var(--sienna-shadow-medium);
+}
+
+.sienna-btn-primary:hover {
+  background-color: #7a9480; /* Darker sage on hover */
+  transform: translateY(-2px);
+  box-shadow: var(--sienna-shadow-luxury);
+}
+
+/* Secondary Button - Sienna Naturals Earth Tone Theme */
+.sienna-btn-secondary, .sienna-border-accent {
+  border: 1px solid var(--sienna-terra);
+  color: var(--sienna-terra);
+  background: transparent;
+  padding: 0.5em 1em;
+  border-radius: 4px;
+}
+
+.sienna-btn-secondary:hover {
+  background-color: rgba(129, 127, 126, 0.1);
+  transform: translateY(-1px);
+}
+
+.sienna-btn-copper {
+  background: var(--sienna-gradient-copper);
+  color: white;
+  box-shadow: var(--sienna-shadow-medium);
+}
+
+.sienna-btn-copper:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--sienna-shadow-luxury);
+}
+
+.sienna-btn-icon {
+  margin-right: var(--sienna-space-sm);
+  font-size: 1.1rem;
+}
+
+.sienna-btn-sm {
+  padding: var(--sienna-space-sm) var(--sienna-space-lg);
+  font-size: 0.875rem;
+}
+
+.sienna-btn-lg {
+  padding: var(--sienna-space-lg) var(--sienna-space-2xl);
+  font-size: 1.1rem;
+}
+
+/* ================================
+   PREMIUM DATA DISPLAY
+   ================================ */
+
+/* Premium Table */
+.sienna-table-container {
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(20px);
+  border-radius: var(--sienna-radius-lg);
+  box-shadow: var(--sienna-shadow-medium);
+  overflow: hidden;
+}
+
+.sienna-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.sienna-table-header {
+  background: var(--sienna-gradient-pearl);
+  border-bottom: 2px solid rgba(34, 31, 31, 0.06);
+}
+
+.sienna-table-header th {
+  padding: var(--sienna-space-lg) var(--sienna-space-xl);
+  text-align: left;
+  font-weight: 700;
+  color: var(--sienna-charcoal);
+  font-size: 0.85rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.sienna-table-body tr {
+  border-bottom: 1px solid rgba(34, 31, 31, 0.04);
+  transition: all var(--sienna-transition-fast);
+}
+
+.sienna-table-body tr:hover {
+  background: rgba(184, 134, 11, 0.02);
+}
+
+.sienna-table-body td {
+  padding: var(--sienna-space-lg) var(--sienna-space-xl);
+  color: var(--sienna-slate);
+}
+
+/* Premium Badges */
+.sienna-badge {
+  display: inline-flex;
+  align-items: center;
+  padding: var(--sienna-space-xs) var(--sienna-space-md);
+  border-radius: var(--sienna-radius-xl);
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.sienna-badge-success {
+  background: rgba(45, 90, 39, 0.1);
+  color: var(--sienna-emerald);
+}
+
+.sienna-badge-warning {
+  background: rgba(212, 165, 116, 0.2);
+  color: var(--sienna-amber);
+}
+
+.sienna-badge-error {
+  background: rgba(139, 38, 53, 0.1);
+  color: var(--sienna-ruby);
+}
+
+.sienna-badge-info {
+  background: rgba(184, 134, 11, 0.1);
+  color: var(--sienna-copper);
+}
+
+/* ================================
+   PREMIUM UTILITIES
+   ================================ */
+
+/* Loading States */
+.sienna-loading-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 300px;
+  background: var(--sienna-gradient-pearl);
+  border-radius: var(--sienna-radius-lg);
+}
+
+.sienna-loading-content {
+  text-align: center;
+}
+
+.sienna-loading-icon {
+  font-size: 3rem;
+  color: var(--sienna-copper);
+  animation: sienna-spin 1s linear infinite;
+}
+
+.sienna-loading-title {
+  margin-top: var(--sienna-space-lg);
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: var(--sienna-charcoal);
+  letter-spacing: 0.1em;
+}
+
+.sienna-loading-subtitle {
+  margin-top: var(--sienna-space-sm);
+  color: var(--sienna-ash);
+  font-weight: 500;
+}
+
+/* Error States */
+.sienna-error-container {
+  text-align: center;
+  padding: var(--sienna-space-3xl);
+  background: rgba(139, 38, 53, 0.02);
+  border: 2px dashed rgba(139, 38, 53, 0.1);
+  border-radius: var(--sienna-radius-lg);
+}
+
+.sienna-error-icon {
+  font-size: 4rem;
+  color: var(--sienna-ruby);
+  margin-bottom: var(--sienna-space-lg);
+}
+
+.sienna-error-title {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--sienna-ruby);
+  margin-bottom: var(--sienna-space-md);
+}
+
+.sienna-error-message {
+  color: var(--sienna-slate);
+  margin-bottom: var(--sienna-space-lg);
+}
+
+/* Empty States */
+.sienna-empty-container {
+  text-align: center;
+  padding: var(--sienna-space-3xl);
+  background: var(--sienna-gradient-pearl);
+  border-radius: var(--sienna-radius-lg);
+}
+
+.sienna-empty-icon {
+  font-size: 4rem;
+  color: var(--sienna-ash);
+  margin-bottom: var(--sienna-space-lg);
+  opacity: 0.5;
+}
+
+.sienna-empty-title {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--sienna-charcoal);
+  margin-bottom: var(--sienna-space-md);
+}
+
+.sienna-empty-message {
+  color: var(--sienna-ash);
+  margin-bottom: var(--sienna-space-xl);
+  max-width: 400px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* ================================
+   PREMIUM ANIMATIONS
+   ================================ */
+
+@keyframes sienna-spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+@keyframes sienna-fadeIn {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes sienna-slideIn {
+  from { opacity: 0; transform: translateX(-20px); }
+  to { opacity: 1; transform: translateX(0); }
+}
+
+@keyframes sienna-scaleIn {
+  from { opacity: 0; transform: scale(0.9); }
+  to { opacity: 1; transform: scale(1); }
+}
+
+.sienna-animate-fadeIn {
+  animation: sienna-fadeIn var(--sienna-transition-slow) ease-out;
+}
+
+.sienna-animate-slideIn {
+  animation: sienna-slideIn var(--sienna-transition-medium) ease-out;
+}
+
+.sienna-animate-scaleIn {
+  animation: sienna-scaleIn var(--sienna-transition-medium) ease-out;
+}
+
+/* ================================
+   RESPONSIVE DESIGN
+   ================================ */
+
+/* Enhanced Responsive Design */
+@media (max-width: 1200px) {
+  .sienna-sidebar {
+    width: 250px;
+  }
+}
+
+@media (max-width: 992px) {
+  .sienna-sidebar {
+    transform: translateX(-100%);
+    position: fixed;
+    z-index: 1050;
+    height: 100vh;
+    top: 0;
+    left: 0;
+    width: 280px;
+    transition: transform var(--sienna-transition-medium);
+  }
+  
+  .sienna-sidebar.sidebar-open {
+    transform: translateX(0);
+  }
+  
+  .dashboard-main {
+    margin-left: 0;
+  }
+  
+  .overlay.active::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 1040;
+  }
+}
+
+@media (max-width: 768px) {
+  .sienna-main-content {
+    padding: var(--sienna-space-lg);
+  }
+  
+  .sienna-card-header,
+  .sienna-card-body {
+    padding: var(--sienna-space-lg);
+  }
+  
+  .sienna-stat-value {
+    font-size: 2rem;
+  }
+  
+  .sienna-header-content {
+    flex-direction: column;
+    gap: var(--sienna-space-md);
+    align-items: stretch;
+  }
+  
+  .sienna-search-field {
+    order: 2;
+  }
+}
+
+@media (max-width: 480px) {
+  .sienna-main-content {
+    padding: var(--sienna-space-md);
+  }
+  
+  .sienna-card-header,
+  .sienna-card-body {
+    padding: var(--sienna-space-md);
+  }
+  
+  .sienna-sidebar {
+    width: 100%;
+  }
+  
+  .sienna-header {
+    padding: var(--sienna-space-sm) var(--sienna-space-md);
+  }
+}
+
+/* ================================
+   SIENNA NATURALS PRODUCT GRID
+   ================================ */
+
+/* Clean Product Grid Layout */
+.sienna-product-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 1.5rem;
+}
+
+/* Product Card Styling */
+.sienna-product-card {
+  background-color: var(--sienna-white);
+  border: 1px solid var(--sienna-sage);
+  border-radius: 8px;
+  padding: 1.25rem;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+  transition: all var(--sienna-transition-medium);
+  overflow: hidden;
+}
+
+.sienna-product-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  border-color: var(--sienna-terra);
+}
+
+.sienna-product-card img {
+  width: 100%;
+  height: auto;
+  border-radius: 4px;
+  margin-bottom: 0.75rem;
+}
+
+.sienna-product-card .label {
+  margin-top: 0.75rem;
+  font-size: 0.9rem;
+  color: var(--sienna-charcoal);
+  font-weight: 500;
+}
+
+/* ================================
+   SIENNA NATURALS TYPOGRAPHY
+   ================================ */
+
+/* Clean Typography for Natural Beauty Brand */
+.sienna-heading-primary {
+  font-family: 'Helvetica Neue', Arial, sans-serif;
+  color: var(--sienna-charcoal);
+  font-weight: 600;
+  line-height: 1.2;
+  letter-spacing: -0.02em;
+}
+
+.sienna-text-primary {
+  font-family: 'Helvetica Neue', Arial, sans-serif;
+  color: var(--sienna-charcoal);
+  line-height: 1.6;
+}
+
+.sienna-text-muted {
+  color: var(--sienna-terra);
+  font-weight: 400;
+}
+
+/* ================================
+   SIENNA NATURALS DASHBOARD ENHANCEMENTS
+   ================================ */
+
+/* Enhanced Dashboard Header */
+.sienna-dashboard-header {
+  background: linear-gradient(135deg, var(--sienna-white) 0%, var(--sienna-beige) 50%, rgba(145, 169, 150, 0.1) 100%);
+  border-bottom: 2px solid var(--sienna-sage);
+  padding: 2rem 1.5rem;
+  margin-bottom: 2rem;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+}
+
+.sienna-dashboard-title {
+  color: var(--sienna-charcoal);
+  font-size: 1.8rem;
+  font-weight: 700;
+  margin-bottom: 0.5rem;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.sienna-dashboard-subtitle {
+  color: var(--sienna-terra);
+  font-size: 1.1rem;
+  font-weight: 500;
+  margin: 0;
+}
+
+/* Enhanced Navigation */
+.sienna-nav-sidebar {
+  background: var(--sienna-white);
+  border-right: 2px solid var(--sienna-sage);
+  box-shadow: 2px 0 8px rgba(0, 0, 0, 0.05);
+}
+
+.sienna-nav-item-enhanced {
+  margin: 0.5rem 0;
+  border-radius: 8px;
+  transition: all 0.25s ease;
+  overflow: hidden;
+  position: relative;
+}
+
+.sienna-nav-item-enhanced::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(135deg, rgba(145, 169, 150, 0.1) 0%, rgba(129, 127, 126, 0.1) 100%);
+  transition: left 0.25s ease;
+  z-index: 0;
+}
+
+.sienna-nav-item-enhanced:hover::before,
+.sienna-nav-item-enhanced.active::before {
+  left: 0;
+}
+
+.sienna-nav-link-enhanced {
+  display: flex;
+  align-items: center;
+  padding: 1rem 1.5rem;
+  color: var(--sienna-charcoal);
+  text-decoration: none;
+  font-weight: 500;
+  border-radius: 8px;
+  transition: all 0.25s ease;
+  position: relative;
+  z-index: 1;
+}
+
+.sienna-nav-link-enhanced:hover,
+.sienna-nav-link-enhanced.active {
+  color: var(--sienna-charcoal);
+  background: rgba(145, 169, 150, 0.08);
+  transform: translateX(4px);
+}
+
+/* Status Indicators */
+.sienna-status-success {
+  color: var(--sienna-emerald);
+  background: rgba(45, 90, 39, 0.1);
+  padding: 0.25rem 0.5rem;
+  border-radius: 4px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  text-transform: uppercase;
+}
+
+.sienna-status-warning {
+  color: var(--sienna-amber);
+  background: rgba(212, 165, 116, 0.2);
+  padding: 0.25rem 0.5rem;
+  border-radius: 4px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  text-transform: uppercase;
+}
+
+.sienna-status-error {
+  color: var(--sienna-ruby);
+  background: rgba(139, 38, 53, 0.1);
+  padding: 0.25rem 0.5rem;
+  border-radius: 4px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  text-transform: uppercase;
+}
+
+/* ================================
+   PREMIUM DASHBOARD STYLES
+   ================================ */
+
+/* Main Dashboard Layout */
+.premium-dashboard {
+  background: var(--sienna-gradient-pearl);
+  min-height: 100vh;
+}
+
+/* Dashboard Header */
+.dashboard-header {
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(20px);
+  border-bottom: 1px solid rgba(139, 133, 128, 0.1);
+  padding: var(--sienna-space-xl) 0;
+  margin-bottom: var(--sienna-space-xl);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  box-shadow: var(--sienna-shadow-soft);
+}
+
+.header-left {
+  flex: 1;
+}
+
+.welcome-section {
+  margin-bottom: 0;
+}
+
+.dashboard-welcome {
+  font-family: var(--sienna-font-display);
+  font-size: 1.75rem;
+  font-weight: 700;
+  color: var(--sienna-charcoal);
+  margin-bottom: var(--sienna-space-sm);
+  display: flex;
+  align-items: center;
+  gap: var(--sienna-space-md);
+  letter-spacing: -0.02em;
+}
+
+.welcome-icon {
+  color: var(--sienna-copper);
+  font-size: 2rem;
+}
+
+.dashboard-subtitle {
+  color: var(--sienna-ash);
+  font-size: 1.1rem;
+  font-weight: 500;
+  margin: 0;
+  line-height: 1.5;
+}
+
+.header-right {
+  display: flex;
+  align-items: center;
+  gap: var(--sienna-space-xl);
+}
+
+.time-widget {
+  text-align: right;
+  padding: var(--sienna-space-md) var(--sienna-space-lg);
+  background: rgba(184, 134, 11, 0.05);
+  border-radius: var(--sienna-radius-md);
+  border: 1px solid rgba(184, 134, 11, 0.1);
+}
+
+.current-time {
+  font-family: var(--sienna-font-mono);
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--sienna-charcoal);
+  margin-bottom: 2px;
+}
+
+.current-date {
+  font-size: 0.9rem;
+  color: var(--sienna-ash);
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.quick-actions {
+  display: flex;
+  gap: var(--sienna-space-sm);
+}
+
+.action-btn {
+  display: flex;
+  align-items: center;
+  gap: var(--sienna-space-sm);
+  padding: var(--sienna-space-md) var(--sienna-space-lg);
+  background: var(--sienna-gradient-primary);
+  color: white;
+  border: none;
+  border-radius: var(--sienna-radius-md);
+  font-family: var(--sienna-font-primary);
+  font-weight: 600;
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: all var(--sienna-transition-medium);
+  box-shadow: var(--sienna-shadow-soft);
+  position: relative;
+  overflow: hidden;
+}
+
+.action-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--sienna-shadow-medium);
+}
+
+.action-btn::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: var(--sienna-gradient-copper);
+  transition: left var(--sienna-transition-medium);
+  z-index: 0;
+}
+
+.action-btn:hover::before {
+  left: 0;
+}
+
+.action-btn * {
+  position: relative;
+  z-index: 1;
+}
+
+.action-label {
+  font-size: 0.85rem;
+}
+
+/* Dashboard Navigation */
+.dashboard-nav {
+  margin-bottom: var(--sienna-space-xl);
+  padding: 0 var(--sienna-space-lg);
+}
+
+.nav-tabs {
+  display: flex;
+  gap: var(--sienna-space-sm);
+  background: rgba(255, 255, 255, 0.9);
+  backdrop-filter: blur(20px);
+  padding: var(--sienna-space-sm);
+  border-radius: var(--sienna-radius-lg);
+  box-shadow: var(--sienna-shadow-soft);
+  border: 1px solid rgba(139, 133, 128, 0.1);
+}
+
+.nav-tab {
+  display: flex;
+  align-items: center;
+  gap: var(--sienna-space-sm);
+  padding: var(--sienna-space-md) var(--sienna-space-lg);
+  background: transparent;
+  border: none;
+  border-radius: var(--sienna-radius-md);
+  font-family: var(--sienna-font-primary);
+  font-weight: 600;
+  font-size: 0.9rem;
+  color: var(--sienna-slate);
+  cursor: pointer;
+  transition: all var(--sienna-transition-medium);
+  position: relative;
+}
+
+.nav-tab:hover {
+  background: rgba(184, 134, 11, 0.1);
+  color: var(--sienna-charcoal);
+  transform: translateY(-1px);
+}
+
+.nav-tab.active {
+  background: var(--sienna-gradient-copper);
+  color: white;
+  box-shadow: var(--sienna-shadow-medium);
+}
+
+.tab-icon {
+  font-size: 1.2rem;
+}
+
+.tab-label {
+  font-weight: 700;
+  letter-spacing: 0.02em;
+}
+
+/* Dashboard Content */
+.dashboard-content {
+  padding: 0 var(--sienna-space-lg);
+}
+
+.view-content {
+  animation: fadeIn 0.5s ease-out;
+}
+
+.fade-in {
+  animation: fadeIn 0.5s ease-out;
+}
+
+.view-title {
+  font-family: var(--sienna-font-display);
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--sienna-charcoal);
+  margin-bottom: var(--sienna-space-sm);
+  display: flex;
+  align-items: center;
+  gap: var(--sienna-space-md);
+  letter-spacing: -0.02em;
+}
+
+.title-icon {
+  color: var(--sienna-copper);
+  font-size: 1.75rem;
+}
+
+.view-subtitle {
+  color: var(--sienna-ash);
+  font-size: 1.1rem;
+  font-weight: 500;
+  margin-bottom: var(--sienna-space-xl);
+  line-height: 1.6;
+}
+
+/* Dashboard Grid */
+.dashboard-grid {
+  display: grid;
+  gap: var(--sienna-space-lg);
+  margin-bottom: var(--sienna-space-xl);
+}
+
+.grid-section.full-width {
+  grid-column: 1 / -1;
+}
+
+.grid-section.half-width {
+  grid-column: span 1;
+}
+
+@media (min-width: 768px) {
+  .dashboard-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (min-width: 1200px) {
+  .dashboard-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+  
+  .grid-section.half-width {
+    grid-column: span 1;
+  }
+  
+  .grid-section.two-thirds {
+    grid-column: span 2;
+  }
+}
+
+/* Premium Metrics Overview */
+.premium-metrics-overview {
+  margin-bottom: var(--sienna-space-2xl);
+}
+
+.metrics-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: var(--sienna-space-xl);
+  flex-wrap: wrap;
+  gap: var(--sienna-space-lg);
+}
+
+.header-content {
+  display: flex;
+  align-items: center;
+  gap: var(--sienna-space-lg);
+}
+
+.dashboard-title {
+  font-family: var(--sienna-font-display);
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--sienna-charcoal);
+  margin: 0;
+  display: flex;
+  align-items: center;
+  gap: var(--sienna-space-md);
+  letter-spacing: -0.02em;
+}
+
+.live-indicator {
+  display: flex;
+  align-items: center;
+  gap: var(--sienna-space-sm);
+  padding: var(--sienna-space-sm) var(--sienna-space-md);
+  background: rgba(45, 90, 39, 0.1);
+  border: 1px solid rgba(45, 90, 39, 0.2);
+  border-radius: var(--sienna-radius-xl);
+  color: var(--sienna-emerald);
+  font-size: 0.85rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.pulse-dot {
+  width: 8px;
+  height: 8px;
+  background: var(--sienna-emerald);
+  border-radius: 50%;
+  animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.3; }
+}
+
+.time-filter {
+  display: flex;
+  gap: var(--sienna-space-xs);
+  background: rgba(255, 255, 255, 0.9);
+  padding: var(--sienna-space-xs);
+  border-radius: var(--sienna-radius-md);
+  box-shadow: var(--sienna-shadow-soft);
+  border: 1px solid rgba(139, 133, 128, 0.1);
+}
+
+.filter-btn {
+  padding: var(--sienna-space-sm) var(--sienna-space-md);
+  background: transparent;
+  border: none;
+  border-radius: var(--sienna-radius-sm);
+  font-family: var(--sienna-font-primary);
+  font-weight: 600;
+  font-size: 0.85rem;
+  color: var(--sienna-slate);
+  cursor: pointer;
+  transition: all var(--sienna-transition-fast);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.filter-btn:hover {
+  background: rgba(184, 134, 11, 0.1);
+  color: var(--sienna-charcoal);
+}
+
+.filter-btn.active {
+  background: var(--sienna-gradient-copper);
+  color: white;
+  box-shadow: var(--sienna-shadow-soft);
+}
+
+/* Metrics Grid */
+.metrics-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: var(--sienna-space-lg);
+  margin-bottom: var(--sienna-space-2xl);
+}
+
+.metric-card {
+  position: relative;
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(20px);
+  border-radius: var(--sienna-radius-lg);
+  overflow: hidden;
+  cursor: pointer;
+  transition: all var(--sienna-transition-medium);
+  animation: fadeInUp 0.6s ease-out both;
+  animation-delay: var(--animation-delay, 0ms);
+  box-shadow: var(--sienna-shadow-medium);
+  border: 1px solid rgba(139, 133, 128, 0.1);
+}
+
+.metric-card:hover {
+  transform: translateY(-4px) scale(1.02);
+  box-shadow: var(--sienna-shadow-luxury);
+}
+
+.card-background {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  opacity: 0;
+  transition: opacity var(--sienna-transition-medium);
+}
+
+.metric-card:hover .card-background {
+  opacity: 0.05;
+}
+
+.gradient-bg {
+  width: 100%;
+  height: 100%;
+}
+
+.card-content {
+  position: relative;
+  z-index: 2;
+  padding: var(--sienna-space-xl);
+}
+
+.card-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: var(--sienna-space-lg);
+}
+
+.icon-container {
+  width: 50px;
+  height: 50px;
+  border-radius: var(--sienna-radius-md);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all var(--sienna-transition-medium);
+}
+
+.metric-icon {
+  font-size: 1.5rem;
+  transition: all var(--sienna-transition-medium);
+}
+
+.metric-card:hover .metric-icon {
+  transform: scale(1.1);
+}
+
+.trend-indicator {
+  display: flex;
+  align-items: center;
+  gap: var(--sienna-space-xs);
+  padding: var(--sienna-space-xs) var(--sienna-space-sm);
+  border-radius: var(--sienna-radius-sm);
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.trend-up {
+  background: rgba(45, 90, 39, 0.1);
+  color: var(--sienna-emerald);
+}
+
+.trend-down {
+  background: rgba(139, 38, 53, 0.1);
+  color: var(--sienna-ruby);
+}
+
+.trend-neutral {
+  background: rgba(139, 133, 128, 0.1);
+  color: var(--sienna-ash);
+}
+
+.trend-icon {
+  font-size: 0.8rem;
+}
+
+.trend-value {
+  font-weight: 800;
+}
+
+.card-body {
+  text-align: left;
+}
+
+.metric-value {
+  margin-bottom: var(--sienna-space-sm);
+}
+
+.value-text {
+  font-family: var(--sienna-font-display);
+  font-size: 2rem;
+  font-weight: 800;
+  color: var(--sienna-charcoal);
+  line-height: 1;
+  letter-spacing: -0.02em;
+}
+
+.metric-title {
+  font-family: var(--sienna-font-primary);
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--sienna-ash);
+  margin: 0;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.loading-skeleton {
+  height: 32px;
+  background: linear-gradient(90deg, rgba(139, 133, 128, 0.1) 0%, rgba(139, 133, 128, 0.2) 50%, rgba(139, 133, 128, 0.1) 100%);
+  background-size: 200% 100%;
+  border-radius: var(--sienna-radius-sm);
+  animation: shimmer 1.5s infinite;
+}
+
+@keyframes shimmer {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+
+.hover-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(135deg, transparent 0%, rgba(184, 134, 11, 0.1) 100%);
+  opacity: 0;
+  transition: opacity var(--sienna-transition-medium);
+  pointer-events: none;
+}
+
+.metric-card:hover .hover-overlay {
+  opacity: 1;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(30px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* Responsive Design for Premium Dashboard */
+@media (max-width: 1200px) {
+  .metrics-grid {
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  }
+  
+  .dashboard-title {
+    font-size: 1.25rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .dashboard-header {
+    flex-direction: column;
+    align-items: stretch;
+    gap: var(--sienna-space-lg);
+    text-align: center;
+  }
+  
+  .header-right {
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+  
+  .quick-actions {
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+  
+  .action-btn {
+    flex: 1;
+    min-width: 120px;
+  }
+  
+  .metrics-header {
+    flex-direction: column;
+    align-items: stretch;
+    text-align: center;
+  }
+  
+  .metrics-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .nav-tabs {
+    flex-wrap: wrap;
+  }
+}
+
+@media (max-width: 480px) {
+  .dashboard-welcome {
+    font-size: 1.5rem;
+    flex-direction: column;
+    gap: var(--sienna-space-sm);
+  }
+  
+  .welcome-icon {
+    font-size: 1.5rem;
+  }
+  
+  .current-time {
+    font-size: 1.25rem;
+  }
+  
+  .action-btn {
+    padding: var(--sienna-space-sm) var(--sienna-space-md);
+    font-size: 0.8rem;
+  }
+  
+  .action-label {
+    display: none;
+  }
+  
+  .metric-card {
+    margin-bottom: var(--sienna-space-md);
+  }
+  
+  .card-content {
+    padding: var(--sienna-space-lg);
+  }
+  
+  .value-text {
+    font-size: 1.75rem;
+  }
+}

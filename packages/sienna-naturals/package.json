@@ -1,0 +1,44 @@
+{
+  "name": "sienna-naturals-chatbot",
+  "version": "1.0.0",
+  "description": "Enterprise-grade Sienna Naturals chatbot with multi-model AI fallback system",
+  "main": "src/index.js",
+  "type": "module",
+  "scripts": {
+    "start": "node src/index.js",
+    "dev": "nodemon src/index.js",
+    "test": "jest",
+    "test:watch": "jest --watch",
+    "test:coverage": "jest --coverage",
+    "lint": "eslint src/",
+    "lint:fix": "eslint src/ --fix"
+  },
+  "keywords": ["chatbot", "sienna-naturals", "ai", "multi-model", "analytics"],
+  "author": "Sienna Naturals Development Team",
+  "license": "MIT",
+  "dependencies": {
+    "express": "^4.21.1",
+    "cors": "^2.8.5",
+    "helmet": "^8.0.0",
+    "rate-limiter-flexible": "^5.0.3",
+    "redis": "^4.7.0",
+    "pg": "^8.13.3",
+    "axios": "^1.7.8",
+    "uuid": "^10.0.0",
+    "dotenv": "^16.4.7",
+    "@google/generative-ai": "^0.21.0",
+    "openai": "^4.73.0",
+    "winston": "^3.17.0",
+    "compression": "^1.7.4",
+    "express-rate-limit": "^7.4.1"
+  },
+  "devDependencies": {
+    "jest": "^29.7.0",
+    "nodemon": "^3.1.9",
+    "eslint": "^9.15.0",
+    "@types/jest": "^29.5.14"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  }
+}
